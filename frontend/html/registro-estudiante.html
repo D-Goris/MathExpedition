@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Registrar Estudiante</title>
+    <link rel="stylesheet" href="../css/global.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Registrar Estudiante</h2>
+            <p>Crea las credenciales base para un nuevo alumno explorador.</p>
+        </header>
+
+        <form id="form-registro-estudiante" novalidate>
+            
+            <section>
+                <label for="nombre-real">Nombre Completo</label>
+                <input type="text" id="nombre-real" name="nombre-real" placeholder="Ej. Ana Sofía Martínez" required>
+            </section>
+
+            <section>
+                <label for="perfil">Nombre de Perfil (Usuario)</label>
+                <input type="text" id="perfil" name="perfil" placeholder="Ej. AnaExploradora" required>
+            </section>
+
+            <section>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </section>
+
+            <section id="contenedor-error">
+                <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
+            </section>
+
+            <button type="submit" id="btn-registrar-estudiante">Crear Cuenta de Estudiante</button>
+        </form>
+
+        <footer>
+            <p><a href="#">Volver al Panel del Profesor</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/registro-estudiante.js"></script>
+</body>
+</html>

@@ -49,8 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        
-
         // Validar que ambas contraseñas coincidan
         if (password !== confirmPassword) {
             mostrarError('Las contraseñas no coinciden. Por favor, verifícalas.');

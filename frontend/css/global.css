@@ -93,6 +93,23 @@ section input:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
+section input, section select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+    font-family: inherit;
+}
+
+section input:focus, section select:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
 /* --- Caja de Errores Genérica --- */
 #contenedor-error {
     display: none;
@@ -148,3 +165,4 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
