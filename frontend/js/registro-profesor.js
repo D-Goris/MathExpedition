@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contenedorError.style.display = 'none';
     }
 
+    //procesa el envio del formulario
     formRegistro.addEventListener('submit', (evento) => {
         evento.preventDefault(); 
 
