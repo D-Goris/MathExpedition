@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Registro de Profesor</title>
+    <link rel="stylesheet" href="../css/registro-profesor.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Registro de Profesor</h2>
+            <p>Crea tu cuenta para comenzar a gestionar tus grupos y alumnos.</p>
+        </header>
+
+        <form id="form-registro" novalidate>
+            
+            <section>
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej. Carlos Mendoza" required>
+            </section>
+
+            <section>
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+            </section>
+
+            <section>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <span> 
+                    <small>Mínimo 8 caracteres alfanuméricos, una mayúscula y un número.</small> 
+                </span> </section>
+
+            <section>
+                <label for="confirm-password">Confirmar Contraseña</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="••••••••" required>
+            </section>
+
+            <section id="contenedor-error" class="hidden">
+                <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
+            </section>
+
+            <button type="submit" id="btn-registrar">Registrar Perfil</button>
+        </form>
+
+        <footer>
+            <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/registro-profesor.js"></script>
+</body>
+</html>
