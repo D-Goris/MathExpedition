@@ -1,0 +1,204 @@
+
+main {
+    max-width: 750px; 
+    position: relative; 
+}
+
+.menu-barra {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 35px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.menu-barra span {
+    width: 100%;
+    height: 5px;
+    background-color: var(--color-principal);
+    border-radius: 10px;
+    transition: transform 0.3s ease, background-color 0.2s ease;
+}
+
+.menu-barra:hover span {
+    background-color: var(--color-principal-hover);
+    transform: scale(1.05);
+}
+
+
+header h2#titulo-seleccion {
+    font-size: 1.8rem;
+    color: var(--color-principal); 
+    margin-top: 10px;
+}
+
+header p#descripcion-seleccion {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+#temas-container {
+    display: grid;
+    /* Esto crea columnas automáticas. Si no caben, bajan a la siguiente fila */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px; /* Espacio entre tarjetas */
+    margin-top: 30px;
+}
+
+/* --- Estilo de cada Tarjeta de Tema --- */
+.tema-card {
+    background-color: var(--color-tarjeta);
+    border: 4px solid #e5e7eb; /* Borde grueso y amigable */
+    border-radius: 24px; /* Bordes mucho más redondeados (estilo burbuja) */
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+    /* Transición con efecto rebote (cubic-bezier) para que sea divertido */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s;
+}
+
+.tema-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--color-texto);
+}
+
+.tema-card p {
+    font-size: 0.95rem;
+    color: var(--color-texto-mutado);
+    line-height: 1.4;
+}
+
+/* Efecto Hover: Cuando el niño pasa el mouse, la tarjeta "salta" */
+.tema-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Imágenes / Iconos por cada tema --- */
+/* Inyectamos iconos usando CSS content. Es ideal para niños y no pesa nada */
+.tema-card::before {
+    display: block;
+    font-size: 4rem; /* Tamaño grande para el icono */
+    margin-bottom: 15px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.tema-card:hover::before {
+    transform: rotate(10deg) scale(1.1); /* El icono se mueve un poquito al hacer hover */
+}
+
+/* Personalización por tema (Colores y Emojis/Iconos) */
+
+/* 1. Aritmética (Rojo pastel) */
+.tema-card[data-tema="aritmetica"] { border-color: #fca5a5; }
+.tema-card[data-tema="aritmetica"]:hover { background-color: #fef2f2; }
+.tema-card[data-tema="aritmetica"]::before { 
+    content: '➕➖'; /* Puedes cambiar esto por un background-image si prefieres tu propia imagen */
+}
+
+/* 2. Álgebra (Azul pastel) */
+.tema-card[data-tema="algebra"] { border-color: #93c5fd; }
+.tema-card[data-tema="algebra"]:hover { background-color: #eff6ff; }
+.tema-card[data-tema="algebra"]::before { 
+    content: '🧮'; 
+}
+
+/* 3. Geometría (Verde pastel) */
+.tema-card[data-tema="geometria"] { border-color: #86efac; }
+.tema-card[data-tema="geometria"]:hover { background-color: #f0fdf4; }
+.tema-card[data-tema="geometria"]::before { 
+    content: '🔺🟡'; /* Formas geométricas variadas */
+}
+
+/* 4. Estadística (Amarillo pastel) */
+.tema-card[data-tema="estadistica"] { border-color: #fde047; }
+.tema-card[data-tema="estadistica"]:hover { background-color: #fefce8; }
+.tema-card[data-tema="estadistica"]::before { 
+    content: '📊'; 
+}
+
+#panel-lateral {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Esto lo esconde fuera de la pantalla */
+    width: 280px;
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    background-color: var(--color-tarjeta);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); /* Sombra hacia la izquierda */
+    transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); /* Efecto de deslizamiento */
+    z-index: 20;
+    padding: 80px 20px 20px 20px; /* Espacio arriba para no tapar el botón de cerrar */
+}
+
+/* Esta es la clase mágica que añadiremos con JavaScript */
+#panel-lateral.abierto {
+    right: 0; /* Al ponerlo en 0, entra a la pantalla */
+}
+
+/* Modificamos el botón menu-barra para que siempre quede por encima del panel */
+.menu-barra {
+    z-index: 30; /* Mayor que el z-index del panel (20) */
+}
+
+/* --- Estilo del contenido del panel --- */
+.panel-contenido h3 {
+    color: var(--color-principal);
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    border-bottom: 2px dashed #e5e7eb;
+    padding-bottom: 10px;
+}
+
+/* --- Botón de Cerrar Sesión --- */
+#btn-cerrar-sesion {
+    width: 100%;
+    padding: 12px;
+    background-color: #fee2e2; /* Fondo rojo clarito */
+    color: #ef4444; /* Texto rojo intenso */
+    border: 2px solid #fca5a5;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#btn-cerrar-sesion:hover {
+    background-color: #fecaca;
+    transform: scale(1.03);
+}
+
+/* --- Ocultar el menú de barra --- */
+.menu-barra.oculto {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Evita que se le pueda hacer clic aunque sea invisible */
+}
+
+/* --- Botón de Cerrar Panel (X) --- */
+#btn-cerrar-panel {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-texto-mutado);
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#btn-cerrar-panel:hover {
+    color: var(--color-error);
+    transform: scale(1.1); /* Crece un poquito al pasar el mouse */
+}
