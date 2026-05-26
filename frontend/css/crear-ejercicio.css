@@ -1,0 +1,10 @@
+.contenedor-opciones {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+section textarea {
+    resize: vertical;
+    min-height: 90px;
+}
