@@ -1,0 +1,32 @@
+/* Estilo por defecto para cualquier pestaña inactiva */
+#botones-logins {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 10px;
+}
+
+.btn-tab {
+    padding: 10px 20px; 
+    border: 1px solid #d1d5db; 
+    background: transparent; 
+    color: var(--color-texto); 
+    border-radius: 20px; 
+    cursor: pointer; 
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Estilo exclusivo para la pestaña activa */
+.btn-tab.active {
+    background: var(--color-principal); 
+    color: white;
+    border-color: var(--color-principal);
+}
+
+footer {
+    display: none;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
