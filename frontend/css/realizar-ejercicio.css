@@ -1,0 +1,111 @@
+/* --- Caja Central del Enunciado --- */
+.contenedor-enunciado {
+    background-color: #fafafa;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 22px 20px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.contenedor-enunciado p {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-texto);
+    line-height: 1.6;
+}
+
+/* --- Contenedor de las 4 Opciones en la Parte Inferior (Distribución 2x2) --- */
+.contenedor-opciones-resolucion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+/* --- Tarjeta de Opción Individual (Botón Interactivo) --- */
+.opcion-tarjeta {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    outline: none;
+    width: 100%;
+}
+
+/* Efectos al pasar el cursor sobre la opción (Hover) */
+.opcion-tarjeta:hover {
+    border-color: var(--color-principal);
+    background-color: #f0f7ff; /* Azul muy suave */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Burbuja circular para la letra identificadora (A, B, C, D) */
+.letra-opcion {
+    background-color: var(--color-fondo);
+    color: var(--color-texto-mutado);
+    font-weight: bold;
+    font-size: 0.9rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.texto-opcion {
+    font-size: 0.95rem;
+    color: var(--color-texto);
+    font-weight: 500;
+}
+
+/* --- ESTADO SELECCIONADO (Se activa mediante JS al hacer clic) --- */
+.opcion-tarjeta.seleccionada {
+    border-color: var(--color-principal);
+    background-color: #e0f2fe; /* Fondo azul destacado */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+.opcion-tarjeta.seleccionada .letra-opcion {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+/* --- Botón de Envío y Comprobación --- */
+#btn-enviar-respuesta {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 15px;
+}
+
+#btn-enviar-respuesta:hover {
+    background-color: var(--color-principal-hover);
+}
+
+/* --- Adaptación Responsiva para Pantallas Estrechas --- */
+@media (max-width: 480px) {
+    .contenedor-opciones-resolucion {
+        grid-template-columns: 1fr; /* Cambia a una lista vertical simple */
+        gap: 10px;
+    }
+}

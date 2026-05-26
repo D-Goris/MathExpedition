@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Realizar Ejercicio</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/realizar-ejercicio.css">
+</head>
+<body>
+    <main style="max-width: 550px; width: 95%;">
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2 id="titulo-ejercicio">Desafío Matemático</h2>
+            <p id="descripcion-ejercicio">Analiza el enunciado y selecciona la respuesta correcta para continuar la aventura.</p>
+        </header>
+
+        <section class="contenedor-enunciado">
+            <p id="texto-enunciado">Cargando la pregunta de la expedición...</p>
+        </section>
+
+        <section class="contenedor-opciones-resolucion">
+            <button type="button" class="opcion-tarjeta" data-opcion="A">
+                <span class="letra-opcion">A</span>
+                <span class="texto-opcion" id="opcion-texto-a">Opción A</span>
+            </button>
+            <button type="button" class="opcion-tarjeta" data-opcion="B">
+                <span class="letra-opcion">B</span>
+                <span class="texto-opcion" id="opcion-texto-b">Opción B</span>
+            </button>
+            <button type="button" class="opcion-tarjeta" data-opcion="C">
+                <span class="letra-opcion">C</span>
+                <span class="texto-opcion" id="opcion-texto-c">Opción C</span>
+            </button>
+            <button type="button" class="opcion-tarjeta" data-opcion="D">
+                <span class="letra-opcion">D</span>
+                <span class="texto-opcion" id="opcion-texto-d">Opción D</span>
+            </button>
+        </section>
+
+        <section id="contenedor-error">
+            <p id="texto-error"></p>
+        </section>
+
+        <button type="button" id="btn-enviar-respuesta">Comprobar Respuesta</button>
+
+        <footer>
+            <p><a href="seleccion-tema-estudiante.html">Volver a Selección de Temas</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/realizar-ejercicio.js"></script>
+</body>
+</html>
