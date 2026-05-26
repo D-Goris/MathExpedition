@@ -1,0 +1,91 @@
+/* =========================================================================
+   CONTENIDO DE TU NUEVO ARCHIVO: modificar-grupo.css
+   ========================================================================= */
+
+/* Estilo para el menú desplegable */
+.seccion-selector select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+    font-family: inherit;
+    color: var(--color-texto);
+}
+
+.seccion-selector select:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Caja contenedora de la lista de estudiantes */
+.contenedor-lista-edicion {
+    margin-top: 25px;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.contenedor-lista-edicion h3 {
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Mensajes de estado internos */
+.mensaje-espera, .lista-vacia {
+    text-align: center;
+    color: var(--color-texto-mutated);
+    padding: 20px 10px;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+/* Fila de cada alumno dentro del grupo */
+.fila-alumno-grupo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.fila-alumno-grupo:last-child {
+    border-bottom: none;
+}
+
+.info-estudiante h4 {
+    font-size: 1rem;
+    color: var(--color-texto);
+}
+
+.info-estudiante span {
+    font-size: 0.85rem;
+    color: var(--color-texto-mutated);
+}
+
+/* Botón de acción rápida: Quitar del grupo */
+.btn-remover {
+    background-color: #fff5f5;
+    color: #e53e3e;
+    border: 1px solid #fed7d7;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: auto !important; /* Evita que el 100% global lo rompa */
+}
+
+.btn-remover:hover {
+    background-color: #e53e3e;
+    color: white;
+    border-color: #e53e3e;
+}

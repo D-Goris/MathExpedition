@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Asignar Alumno</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/asignar-alumno.css">
+</head>
+<body>
+    <main style="max-width: 480px;">
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Asignación de Exploradores</h2>
+            <p>Vincula a tus estudiantes con sus respectivos salones de clase.</p>
+        </header>
+
+        <form id="form-asignar-alumno" novalidate>
+            <section>
+                <label for="select-alumno">Selecciona al Estudiante</label>
+                <select id="select-alumno" required>
+                    <option value="" disabled selected>Elige un estudiante...</option>
+                    <option value="1">Carlos Mendoza (ExploradorMate)</option>
+                    <option value="2">Sofía Rodríguez (MathWizard)</option>
+                    <option value="3">Lucas Gómez (ReyNumeros)</option>
+                </select>
+            </section>
+
+            <section>
+                <label for="select-grupo">Selecciona el Grupo Destino</label>
+                <select id="select-grupo" required>
+                    <option value="" disabled selected>Elige un salón...</option>
+                    <option value="grado3a">3er Grado A</option>
+                    <option value="grado3b">3er Grado B</option>
+                </select>
+            </section>
+
+            <section id="contenedor-error">
+                <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
+            </section>
+
+            <button type="submit" id="btn-confirmar-asignacion">Confirmar Asignación</button>
+        </form>
+
+        <footer>
+            <p><a href="#">Volver al Panel del Profesor</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/asignar-alumno.js"></script>
+</body>
+</html>

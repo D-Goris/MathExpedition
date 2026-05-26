@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Panel del Profesor</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/panel-profesor.css">
+</head>
+<body>
+    <main style="max-width: 850px; width: 95%;"> 
+        <header class="header-dashboard">
+            <div>
+                <h1>Math<span>Expedition</span></h1>
+                <h2>Panel de Control Docente</h2>
+                <p>Bienvenido(a), <strong id="nombre-docente">Profesor(a)</strong>. Administra el progreso de tus salones.</p>
+            </div>
+            <button id="btn-cerrar-sesion-hub" class="btn-salir">Cerrar Sesión 🚪</button>
+        </header>
+
+        <h3 class="titulo-categoria">👤 Gestión de Estudiantes</h3>
+        <div class="dashboard-grid">
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">👤➕</div>
+                <h3>Registrar Estudiante</h3>
+                <p>Crea cuentas de acceso exclusivas y nombres de perfil para nuevos exploradores.</p>
+                <a href="registro-estudiante.html" class="btn-enlace">Registrar Alumno</a>
+            </div>
+
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">📋👁️</div>
+                <h3>Ver Estudiantes</h3>
+                <p>Consulta los perfiles y verifica de forma segura qué salón tienen asignado (RNF Compliant).</p>
+                <a href="ver-perfiles.html" class="btn-enlace">Listar Exploradores</a>
+            </div>
+        </div>
+
+        <h3 class="titulo-categoria">🏫 Estructura de Salones</h3>
+        <div class="dashboard-grid">
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">🏫➕</div>
+                <h3>Crear Grupo</h3>
+                <p>Inicializa nuevos salones con nombre y descripción, validando duplicados en el sistema.</p>
+                <a href="crear-grupo.html" class="btn-enlace">Crear Salón</a>
+            </div>
+
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">🔗</div>
+                <h3>Asignar Alumnos</h3>
+                <p>Vincula y distribuye a tus estudiantes registrados dentro de tus grupos activos.</p>
+                <a href="asignar-alumno.html" class="btn-enlace">Inscribir Alumnos</a>
+            </div>
+
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">⚙️🏫</div>
+                <h3>Modificar Salón</h3>
+                <p>Administra los integrantes de un grupo escolar. Permite remover alumnos de las secciones.</p>
+                <a href="modificar-grupo.html" class="btn-enlace">Modificar Integrantes</a>
+            </div>
+        </div>
+
+        <h3 class="titulo-categoria">📐 Contenido Pedagógico</h3>
+        <div class="dashboard-grid">
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">📐➕</div>
+                <h3>Crear Ejercicio</h3>
+                <p>Diseña nuevos retos matemáticos categorizados por los temas oficiales del juego.</p>
+                <a href="crear-ejercicio.html" class="btn-enlace">Diseñar Pregunta</a>
+            </div>
+
+            <div class="tarjeta-modulo">
+                <div class="icono-modulo">🚀</div>
+                <h3>Asignar Misiones</h3>
+                <p>Envía paquetes completos de ejercicios a salones específicos para habilitar su juego.</p>
+                <a href="asignar-ejercicios.html" class="btn-enlace">Publicar Tarea</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>MathExpedition &copy; 2026 - Panel de Administración Educativa</p>
+        </footer>
+    </main>
+
+    <script src="../js/panel-profesor.js"></script>
+</body>
+</html>

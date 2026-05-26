@@ -1,0 +1,92 @@
+/* =========================================================================
+   CONTENIDO DE TU ARCHIVO ACTUALIZADO: ver-perfiles.css
+   ========================================================================= */
+
+/* Estilo para la barra de búsqueda */
+.seccion-busqueda {
+    margin-bottom: 20px;
+}
+
+.seccion-busqueda input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+/* Contenedor principal de la lista */
+.contenedor-tabla-perfiles {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 15px;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+/* Tarjeta individual de cada alumno */
+.fila-perfil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s;
+}
+
+.fila-perfil:last-child {
+    border-bottom: none;
+}
+
+.fila-perfil:hover {
+    background-color: #f9fafb;
+}
+
+/* Información de identificación del alumno */
+.info-alumno h4 {
+    font-size: 1.05rem;
+    color: var(--color-texto);
+    margin-bottom: 4px;
+}
+
+.info-alumno p {
+    font-size: 0.85rem;
+    color: var(--color-texto-mutated);
+}
+
+.info-alumno strong {
+    color: var(--color-principal);
+}
+
+/* ERS COMPLIANT: Reemplazo de contraseña por Badge de Grupo Escolar */
+.grupo-alumno-badge {
+    font-size: 0.85rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+/* Clase para alumnos asignados */
+.asignado {
+    background-color: #e0f2fe; /* Azul suave */
+    color: #0369a1;            /* Azul oscuro */
+    border: 1px solid #bae6fd;
+}
+
+/* Clase para alumnos huérfanos de grupo (Sin asignar) */
+.sin-asignar {
+    background-color: #f3f4f6; /* Gris */
+    color: #4b5563;            /* Gris oscuro */
+    border: 1px solid #e5e7eb;
+    font-style: italic;
+}
+
+/* Estado cuando no hay resultados en la búsqueda */
+.sin-resultados {
+    text-align: center;
+    color: var(--color-texto-mutated);
+    padding: 30px 10px;
+    font-size: 0.95rem;
+}

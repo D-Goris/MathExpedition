@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Crear Grupo</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/crear-grupo.css">
+</head>
+<body>
+    <main style="max-width: 500px;">
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Crear Nuevo Grupo</h2>
+            <p>Por favor, introduce los datos solicitados por la ERS para inicializar el grupo.</p>
+        </header>
+
+        <form id="form-crear-grupo" novalidate>
+            <section>
+                <label for="nombre-grupo">Nombre del Grupo</label>
+                <input type="text" id="nombre-grupo" placeholder="Ej. 3er Grado A" required>
+            </section>
+
+            <section>
+                <label for="descripcion-grupo">Descripción del Grupo</label>
+                <textarea id="descripcion-grupo" placeholder="Ej. Clase enfocada en operaciones aritméticas básicas de la mañana." required></textarea>
+            </section>
+
+            <section id="contenedor-error">
+                <p id="texto-error"></p>
+            </section>
+
+            <button type="submit" id="btn-guardar-grupo">Crear Grupo</button>
+        </form>
+
+        <section class="seccion-lista">
+            <h3>Grupos de Estudiantes Disponibles</h3>
+            <div id="lista-grupos-disponibles">
+                </div>
+        </section>
+
+        <footer>
+            <p><a href="#">Volver al Panel del Profesor</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/crear-grupo.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Modificar Integrantes de Grupo</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/modificar-grupo.css">
+</head>
+<body>
+    <main style="max-width: 600px; width: 95%;">
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Modificar Alumnos del Grupo</h2>
+            <p>Selecciona un salón para gestionar y actualizar la lista de sus estudiantes integrados.</p>
+        </header>
+
+        <section class="seccion-selector">
+            <label for="select-grupo-edicion">Selecciona el Grupo Escolar</label>
+            <select id="select-grupo-edicion">
+                <option value="" disabled selected>Elige un salón de clases...</option>
+                <option value="grado3a">3er Grado A</option>
+                <option value="grado3b">3er Grado B</option>
+            </select>
+        </section>
+
+        <section class="contenedor-lista-edicion">
+            <h3>Estudiantes Inscritos en este Grupo</h3>
+            <div id="lista-alumnos-grupo">
+                <p class="mensaje-espera">Selecciona un grupo arriba para ver y modificar a sus estudiantes.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p><a href="#">Volver al Panel del Profesor</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/modificar-grupo.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+/* Estilo para el área de descripción */
+section textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+}
+
+section textarea:focus {
+    border-color: var(--color-principal);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Contenedor de la lista de grupos disponibles */
+.seccion-lista {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #e5e7eb;
+}
+
+.seccion-lista h3 {
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    margin-bottom: 15px;
+}
+
+/* Tarjetas individuales de los grupos creados */
+.tarjeta-grupo {
+    background-color: #fafafa;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+}
+
+.tarjeta-grupo h4 {
+    color: var(--color-principal);
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+.tarjeta-grupo p {
+    color: var(--color-texto-mutado);
+    font-size: 0.85rem;
+}
