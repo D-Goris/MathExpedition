@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Elementos del html
+    // Elementos del html (variables a modificar)
     const btnEstudiante = document.getElementById('btn-estudiante');
     const btnProfesor = document.getElementById('btn-profesor');
     const loginTitulo = document.getElementById('login-titulo');
@@ -14,19 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorError = document.getElementById('contenedor-error');
     const textoError = document.getElementById('texto-error');
 
-    // constantes default del boton seleccionado.
+    // variable default del boton seleccionado.
     let rolActual = 'estudiante';
 
+    // Función para mostrar el contenedor de error (Mensaje de error)
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
     }
 
+    // Función para ocultar el contenedor de error (Mensaje de error)
     function ocultarError() {
         contenedorError.style.display = 'none';
     }
 
-    //Si se selecciona estudiante
+    //Función que cambia el aspecto del login dependiendo del rol seleccionado (estudiante)
     btnEstudiante.addEventListener('click', () => {
         rolActual = 'estudiante';
         ocultarError();
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnEstudiante.classList.add('active');
         btnProfesor.classList.remove('active');
         loginTitulo.textContent = 'Ingreso de Estudiantes';
-        loginDescripcion.textContent = '¡Hola explorador! Digita tu usuario y contraseña para continuar la aventura.';
+        loginDescripcion.textContent = '¡Hola explorador! Introduce tu usuario y contraseña para continuar la aventura.';
         labelIdentificador.textContent = 'Nombre de Perfil';
         inputIdentificador.type = 'text';
         inputIdentificador.placeholder = 'Ej. ExploradorMate';
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         footerLogin.style.display = 'none';
     });
 
-    //Si se selecciona profesor
+    //Función que cambia el aspecto del login dependiendo del rol seleccionado (profesor)
     btnProfesor.addEventListener('click', () => {
         rolActual = 'profesor';
         ocultarError();
@@ -61,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         footerLogin.style.display = 'block';
     });
 
-    // Procesa el envío del formulario
+    // Función para procesar el envío del formulario
     formLogin.addEventListener('submit', (evento) => {
         evento.preventDefault();
         ocultarError();
@@ -77,8 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (rolActual === 'estudiante') {
             // Lógica para Estudiantes
-
-            // window.location.href = 'menu-estudiante.html'; 
+            //if ( FUNCION DE VALIDACION DE CREDENCIALES DE ESTUDIANTE DEL BACKEND ) {
+            //window.location.href = 'menu-profesor.html';
+            //}else{
+            //mostrarError('Credenciales incorrectas. Por favor, intenta de nuevo.');
+            //return;
+            //}
         } else {
             // Validación específica para Profesor: formato de correo
             const regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -88,8 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Lógica para Profesores
-
+            //if ( FUNCION DE VALIDACION DE CREDENCIALES DE PROFESOR DEL BACKEND ) {
             //window.location.href = 'menu-profesor.html';
+            //}else{
+            //mostrarError('Credenciales incorrectas. Por favor, intenta de nuevo.');
+            //return;
+            //}
         }
     });
 });

@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        // Aquí iría la lógica para enviar los datos al backend y registrar al profesor
+        // Por ahora, redirigimos a la página de login como simulación de registro exitoso
+
         window.location.href = 'login.html'; 
     });
 });

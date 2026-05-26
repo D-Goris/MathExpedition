@@ -1,9 +1,10 @@
-/* =========================================================================
-   CONTENIDO DE TU ARCHIVO RECONSTRUIDO: panel-profesor.css
-   ========================================================================= */
+main{
+    max-width: 850px; 
+    width: 95%;
+}
 
 /* Ajustes para el encabezado horizontal */
-.header-dashboard {
+header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,12 +14,12 @@
     text-align: left;
 }
 
-.header-dashboard p {
+header p {
     margin-bottom: 0;
 }
 
 /* Botón de cerrar sesión */
-.btn-salir {
+#btn-cerrar-sesion-hub {
     background-color: #fee2e2;
     color: #ef4444;
     border: 1px solid #fca5a5;
@@ -27,17 +28,16 @@
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
-    width: auto !important; 
     transition: background-color 0.2s, transform 0.1s;
 }
 
-.btn-salir:hover {
+#btn-cerrar-sesion-hub:hover {
     background-color: #fecaca;
     transform: translateY(-1px);
 }
 
 /* Títulos separadores de categorías lógicas */
-.titulo-categoria {
+h2 {
     font-size: 1.2rem;
     color: var(--color-texto);
     margin-top: 30px;

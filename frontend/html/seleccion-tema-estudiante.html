@@ -3,29 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathExpedition - Seleccion de Tema</title>
+    <title>MathExpedition - Selección de Tema</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/seleccion-tema-estudiante.css">
 </head>
 
 <body>
-    <main>
-        <button class="menu-barra" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <aside id="panel-lateral">
-            <button id="btn-cerrar-panel" aria-label="Cerrar panel">✖</button>
-            
-            <div class="panel-contenido">
-                <h3>Opciones de Aventureros</h3>
-                <button id="btn-cerrar-sesion">
-                    🚪 Cerrar Sesión
-                </button>
-            </div>
-        </aside>
+    <main style="position: relative;">
+        <div class="contenedor-salir">
+            <button id="btn-cerrar-sesion" class="btn-salir">🚪 Cerrar Sesión</button>
+        </div>
 
         <header>
             <h1>Math<span>Expedition</span></h1>
@@ -34,23 +21,7 @@
         </header>
 
         <section id="temas-container">
-            <div class="tema-card" data-tema="aritmetica">
-                <h3>Aritmética</h3>
-                <p>Explora el mundo de los números y las operaciones básicas.</p>
-            </div>
-            <div class="tema-card" data-tema="algebra">
-                <h3>Álgebra</h3>
-                <p>Descubre cómo resolver ecuaciones y trabajar con variables.</p>
-            </div>
-            <div class="tema-card" data-tema="geometria">
-                <h3>Geometría</h3>
-                <p>Adéntrate en el estudio de las formas, tamaños y posiciones.</p>
-            </div>
-            <div class="tema-card" data-tema="estadistica">
-                <h3>Estadística</h3>
-                <p>Aprende a recolectar, analizar e interpretar datos.</p>
-            </div>
-        </section>
+            </section>
     </main>
 
     <script src="../js/seleccion-tema-estudiante.js"></script>

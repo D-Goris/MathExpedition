@@ -1,30 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // // Elementos del html (variables a modificar)
     const selectGrupo = document.getElementById('select-grupo-edicion');
     const contenedorLista = document.getElementById('lista-alumnos-grupo');
 
-    // Simulación de Base de Datos Relacional (Alumnos enlazados a IDs de grupos)
+    //Elementos de la base de datos simulada (variables a modificar)
+    const gruposDB = [
+        { idKey: "grado3a", nombre: "3er Grado A" },
+        { idKey: "grado3b", nombre: "3er Grado B" }
+    ];
+
     let asignacionesDB = [
         { idAlumno: 1, nombre: "Carlos Mendoza", usuario: "ExploradorMate", grupoKey: "grado3a" },
         { idAlumno: 2, nombre: "Sofía Rodríguez", usuario: "MathWizard", grupoKey: "grado3b" },
         { idAlumno: 4, nombre: "Ana Martínez", usuario: "DeltaMath", grupoKey: "grado3a" }
     ];
 
+    //Funcion que carga los grupos disponibles en el menú desplegable.
+    function cargarGruposMockup() {
+        if (gruposDB.length === 0) {
+            selectGrupo.innerHTML = '<option value="">No hay grupos disponibles</option>';
+            return;
+        }
+        gruposDB.forEach(grupo => {
+            const nuevaOpcion = document.createElement('option');
+            nuevaOpcion.value = grupo.idKey;
+            nuevaOpcion.textContent = grupo.nombre;
+            selectGrupo.appendChild(nuevaOpcion);
+        });
+    }
+
+    // Inicializar el menú desplegable de salones
+    cargarGruposMockup();
+    
     // Función que lee el grupo seleccionado y renderiza a sus integrantes
     function renderizarIntegrantes(grupoKey) {
-        if (!grupoKey) return;
+        if (!grupoKey){
+            contenedorLista.innerHTML = '<p class="lista-vacia">📭 Por favor, selecciona un grupo para ver sus estudiantes.</p>';
+            return;
+        }
 
         // Filtrar los alumnos que corresponden a este salón
         const alumnosDelGrupo = asignacionesDB.filter(item => item.grupoKey === grupoKey);
 
         contenedorLista.innerHTML = ''; // Limpiar contenedor
 
-        // Caso: El grupo existe pero no tiene ningún alumno asignado aún
+        //El grupo existe pero no tiene ningún alumno asignado aún
         if (alumnosDelGrupo.length === 0) {
             contenedorLista.innerHTML = '<p class="lista-vacia">📭 Este grupo no tiene estudiantes inscritos actualmente.</p>';
             return;
         }
 
-        // Renderizar cada alumno con su respectivo botón de modificación
+        // EL grupo existe y tiene alumnos asignados, por lo que se renderizan normalmente.
         alumnosDelGrupo.forEach(alumno => {
             const divFila = document.createElement('div');
             divFila.className = 'fila-alumno-grupo';
@@ -57,20 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
             boton.addEventListener('click', (e) => {
                 const idParaQuitar = parseInt(e.target.getAttribute('data-id'));
                 
+                //Todo este codigo se tiene que eliminar cuando se integre con la base de datos real, ya que el backend se encargará de hacer la modificación y devolver el resultado actualizado.
                 // Encontrar el nombre del estudiante para personalizar la alerta
-                const alumnoObjetivo = asignacionesDB.find(item => item.idAlumno === idParaQuitar);
+                const alumnoObjetivo = asignacionesDB.find(item => item.idAlumno === idParaQuitar);    
+                // ACCIÓN: Modificamos el registro de la BD simulada (Saca al alumno del grupo)
+                asignacionesDB = asignacionesDB.filter(item => item.idAlumno !== idParaQuitar);
+                // Mensaje de éxito del sistema
+                alert(`¡Modificación exitosa!\nEl alumno fue removido del salón.`);
+                    
+
                 
-                if (confirm(`¿Estás seguro de que deseas remover a "${alumnoObjetivo.nombre}" de este grupo escolar?`)) {
-                    
-                    // ACCIÓN: Modificamos el registro de la BD simulada (Saca al alumno del grupo)
-                    asignacionesDB = asignacionesDB.filter(item => item.idAlumno !== idParaQuitar);
-                    
-                    // Mensaje de éxito del sistema
-                    alert(`¡Modificación exitosa!\nEl alumno fue removido del salón.`);
-                    
-                    // Refrescar la pantalla inmediatamente con los datos actualizados
-                    renderizarIntegrantes(grupoKey);
-                }
+                // Refrescar la pantalla inmediatamente con los datos actualizados
+                renderizarIntegrantes(grupoKey);
+
             });
         });
     }

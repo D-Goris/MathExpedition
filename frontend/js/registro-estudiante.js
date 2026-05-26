@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorError = document.getElementById('contenedor-error');
     const textoError = document.getElementById('texto-error');
 
+    // Función para mostrar el contenedor de error (Mensaje de error)
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
     }
 
+    // Función para ocultar el contenedor de error (Mensaje de error)
     function ocultarError() {
         contenedorError.style.display = 'none';
     }
@@ -43,8 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        //logica de guardado
-
+        //logica de guardado de datos del estudiantes (backend)
         
         formEstudiante.reset();
     });

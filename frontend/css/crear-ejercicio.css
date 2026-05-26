@@ -1,3 +1,7 @@
+main{
+    max-width: 550px;
+}
+
 .contenedor-opciones {
     display: grid;
     grid-template-columns: 1fr 1fr;

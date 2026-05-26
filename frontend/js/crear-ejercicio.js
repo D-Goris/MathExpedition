@@ -1,27 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    //Elementos del html que vamos a manipular
     const formEjercicio = document.getElementById('form-crear-ejercicio');
     const selectTema = document.getElementById('tema');
     const inputNuevoTema = document.getElementById('nuevo-tema');
     const textPregunta = document.getElementById('pregunta');
-    
-    // Opciones de respuesta
+    const contenedorError = document.getElementById('contenedor-error');
+    const textoError = document.getElementById('texto-error');
     const inputOpA = document.getElementById('opcion-a');
     const inputOpB = document.getElementById('opcion-b');
     const inputOpC = document.getElementById('opcion-c');
     const inputOpD = document.getElementById('opcion-d');
-    
     const selectCorrecta = document.getElementById('respuesta-correcta');
     
-    // Contenedor de Alertas de Error
-    const contenedorError = document.getElementById('contenedor-error');
-    const textoError = document.getElementById('texto-error');
+    //ELementos de la base de datos simulada (mockup) para poblar el select de temas (cambiar con el backend real)
+    const temasDB = [
+        { idKey: "aritmetica", nombre: "Aritmética" },
+        { idKey: "algebra", nombre: "Álgebra" },
+        { idKey: "geometria", nombre: "Geometría" },
+        { idKey: "estadistica", nombre: "Estadística" }  
+    ];
 
+    //Funcion para cargar dinámicamente los temas en el select.
+    function cargarTemasMockup() {
+        temasDB.forEach(tema => {
+            const nuevaOpcion = document.createElement('option');
+            nuevaOpcion.value = tema.idKey; // Corregido: usando la variable correcta 'tema'
+            nuevaOpcion.textContent = tema.nombre;
+            selectTema.appendChild(nuevaOpcion);
+        });
+        
+        // Insertar al final la opción interactiva para añadir temas nuevos
+        const opcionNueva = document.createElement('option');
+        opcionNueva.value = "nueva";
+        opcionNueva.textContent = "➕ Añadir nuevo tema...";
+        selectTema.appendChild(opcionNueva);
+    }
+
+    // Inicializar el cargado dinámico
+    cargarTemasMockup();
+
+    //Funcion para mostrar mensajes de error.
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
     }
 
+    //funcion para ocultar el mensaje de error
     function ocultarError() {
         contenedorError.style.display = 'none';
     }
@@ -55,13 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const opD = inputOpD.value.trim();
         const correcta = selectCorrecta.value;
 
-        // A. Validar que ningún campo quede vacío
+        //Validar que ningún campo quede vacío
         if (!temaFinal || !pregunta || !opA || !opB || !opC || !opD || !correcta) {
             mostrarError('Por favor, completa todos los campos del ejercicio y selecciona la respuesta correcta.');
             return;
         }
 
-        // B. Validar que no existan opciones de respuesta idénticas
+        //Validar que no existan opciones de respuesta idénticas
         const opciones = [opA, opB, opC, opD];
         const opcionesUnicas = new Set(opciones);
         
@@ -70,9 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- SIMULACIÓN DE ÉXITO (Listo para conectar al Backend en el futuro) ---
-        alert(`¡Ejercicio guardado con éxito!\nTema asignado: ${temaFinal.toUpperCase()}`);
-        
+        // Aquí se construiría el objeto ejercicio con los datos recopilados y se enviaría al backend.
+
+
         // Reseteamos el formulario al estado inicial limpio
         formEjercicio.reset();
         inputNuevoTema.style.display = 'none';

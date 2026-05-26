@@ -1,7 +1,6 @@
-/* =========================================================================
-   CONTENIDO DE TU NUEVO ARCHIVO: asignar-ejercicios.css
-   ========================================================================= */
-
+main{
+    max-width: 500px
+}
 /* Unificación de los elementos select con las propiedades del global.css */
 section select {
     width: 100%;

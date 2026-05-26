@@ -1,3 +1,6 @@
+main{
+    max-width: 500px;
+}
 /* Estilo para el área de descripción */
 section textarea {
     width: 100%;

@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos del html (variables a modificar)
     const contenedorPerfiles = document.getElementById('lista-perfiles-estudiantes');
     const buscador = document.getElementById('buscador-perfiles');
 
-    // Simulación de Base de Datos de Alumnos (Sin contraseñas visibles - RNF Compliant)
+    // Simulación de Base de Datos de Alumnos (Proviene del back)
     const estudiantesDB = [
         { nombreCompleto: "Carlos Mendoza", nombrePerfil: "ExploradorMate", grupo: "3er Grado A" },
         { nombreCompleto: "Sofía Rodríguez", nombrePerfil: "MathWizard", grupo: "3er Grado B" },
-        { nombreCompleto: "Lucas Gómez", nombrePerfil: "ReyNumeros", grupo: "" }, // Caso sin asignar para pruebas
+        { nombreCompleto: "Lucas Gómez", nombrePerfil: "ReyNumeros", grupo: "" },
         { nombreCompleto: "Ana Martínez", nombrePerfil: "DeltaMath", grupo: "3er Grado A" }
     ];
 
@@ -14,16 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function cargarPerfiles(listaEstudiantes) {
         contenedorPerfiles.innerHTML = ''; 
 
+        //Caso por si la lista traida esta vacia.
         if (listaEstudiantes.length === 0) {
             contenedorPerfiles.innerHTML = '<p class="sin-resultados">❌ No se encontraron exploradores con ese criterio.</p>';
             return;
         }
 
+        // Iteración para crear cada perfil de estudiante.
         listaEstudiantes.forEach(estudiante => {
             const divFila = document.createElement('div');
             divFila.className = 'fila-perfil';
-
-            // Evaluación del estado del grupo
+            
             const tieneGrupo = estudiante.grupo.trim() !== "";
             const textoGrupo = tieneGrupo ? estudiante.grupo : "Sin Asignar";
             const claseBadge = tieneGrupo ? "grupo-alumno-badge asignado" : "grupo-alumno-badge sin-asignar";
@@ -44,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar la pantalla
     cargarPerfiles(estudiantesDB);
 
-    // LÓGICA DEL BUSCADOR: Permite buscar también por el nombre del grupo
+    // LÓGICA DEL BUSCADOR: Permite buscar también por el nombre del grupo (No hace falta cambiarlo con el back)
     buscador.addEventListener('input', () => {
         const textoBusqueda = buscador.value.toLowerCase().trim();
 

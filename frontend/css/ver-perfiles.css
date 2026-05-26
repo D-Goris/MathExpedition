@@ -1,6 +1,7 @@
-/* =========================================================================
-   CONTENIDO DE TU ARCHIVO ACTUALIZADO: ver-perfiles.css
-   ========================================================================= */
+main{
+    max-width: 650px; 
+    width: 95%;
+}
 
 /* Estilo para la barra de búsqueda */
 .seccion-busqueda {
@@ -59,7 +60,6 @@
     color: var(--color-principal);
 }
 
-/* ERS COMPLIANT: Reemplazo de contraseña por Badge de Grupo Escolar */
 .grupo-alumno-badge {
     font-size: 0.85rem;
     font-weight: bold;
@@ -70,15 +70,15 @@
 
 /* Clase para alumnos asignados */
 .asignado {
-    background-color: #e0f2fe; /* Azul suave */
-    color: #0369a1;            /* Azul oscuro */
+    background-color: #e0f2fe;
+    color: #0369a1;            
     border: 1px solid #bae6fd;
 }
 
-/* Clase para alumnos huérfanos de grupo (Sin asignar) */
+/* Clase para alumnos Sin asignar */
 .sin-asignar {
-    background-color: #f3f4f6; /* Gris */
-    color: #4b5563;            /* Gris oscuro */
+    background-color: #f3f4f6;
+    color: #4b5563;            
     border: 1px solid #e5e7eb;
     font-style: italic;
 }

@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="../css/realizar-ejercicio.css">
 </head>
 <body>
-    <main style="max-width: 550px; width: 95%;">
+    <main>
+        
+        <div class="contenedor-volver">
+            <button id="btn-volver-menu" class="btn-volver">↩ Volver</button>
+        </div>
+
         <header>
             <h1>Math<span>Expedition</span></h1>
             <h2 id="titulo-ejercicio">Desafío Matemático</h2>
@@ -19,7 +24,7 @@
             <p id="texto-enunciado">Cargando la pregunta de la expedición...</p>
         </section>
 
-        <section class="contenedor-opciones-resolucion">
+        <section class="contenedor-opciones-resolucion" id="bloque-opciones">
             <button type="button" class="opcion-tarjeta" data-opcion="A">
                 <span class="letra-opcion">A</span>
                 <span class="texto-opcion" id="opcion-texto-a">Opción A</span>
@@ -38,15 +43,12 @@
             </button>
         </section>
 
-        <section id="contenedor-error">
-            <p id="texto-error"></p>
+        <section id="bloque-resultado" class="bloque-resultado oculto">
+            <p id="mensaje-resultado"></p>
+            <button type="button" id="btn-siguiente-pregunta" class="btn-siguiente">Avanzar al siguiente reto 🚀</button>
         </section>
 
         <button type="button" id="btn-enviar-respuesta">Comprobar Respuesta</button>
-
-        <footer>
-            <p><a href="seleccion-tema-estudiante.html">Volver a Selección de Temas</a></p>
-        </footer>
     </main>
 
     <script src="../js/realizar-ejercicio.js"></script>

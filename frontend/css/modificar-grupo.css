@@ -1,6 +1,7 @@
-/* =========================================================================
-   CONTENIDO DE TU NUEVO ARCHIVO: modificar-grupo.css
-   ========================================================================= */
+main{
+    max-width: 600px; 
+    width: 95%;
+}
 
 /* Estilo para el menú desplegable */
 .seccion-selector select {

@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <main style="max-width: 550px;"> <header>
+    <main> 
+        <header>
             <h1>Math<span>Expedition</span></h1>
             <h2>Nuevo Reto Matemático</h2>
             <p>Diseña un ejercicio de selección simple para tus alumnos.</p>
@@ -21,12 +22,7 @@
                 <label for="tema">Tema de la Expedición</label>
                 <select id="tema" name="tema" required>
                     <option value="" disabled selected>Selecciona un tema...</option>
-                    <option value="aritmetica">Aritmética</option>
-                    <option value="algebra">Álgebra</option>
-                    <option value="geometria">Geometría</option>
-                    <option value="estadistica">Estadística</option>
-                    <option value="nueva">➕ Añadir nuevo tema...</option>
-                </select>
+                    </select>
                 
                 <input type="text" id="nuevo-tema" name="nuevo-tema" placeholder="Escribe el nombre del nuevo tema" style="display: none; margin-top: 10px;">
             </section>
@@ -65,7 +61,7 @@
         </form>
 
         <footer>
-            <p><a href="#">Volver al Panel del Profesor</a></p>
+            <p><a href="menu-profesor.html">Volver al Panel del Profesor</a></p>
         </footer>
     </main>
 

@@ -1,3 +1,46 @@
+main{
+    max-width: 550px; 
+    width: 95%; 
+    position: relative;
+}
+
+
+/* --- NUEVO: Botón Volver (Estilo similar al botón salir de la otra pantalla pero en azul/gris) --- */
+.contenedor-volver {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 10;
+}
+
+.btn-volver {
+    padding: 6px 14px;
+    background-color: #f3f4f6; /* Gris claro neutro */
+    color: #4b5563;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #e5e7eb;
+    transform: scale(1.05);
+}
+
+/* --- Ajuste Responsivo para las opciones (2x2 en PC, 1 columna en Celulares) --- */
+@media (max-width: 480px) {
+    .contenedor-opciones-resolucion {
+        grid-template-columns: 1fr !important; /* Pasa a una sola columna si la pantalla es muy chica */
+    }
+    .contenedor-volver {
+        position: static; /* Evita que tape el título en pantallas micro */
+        margin-bottom: 15px;
+    }
+}
+
 /* --- Caja Central del Enunciado --- */
 .contenedor-enunciado {
     background-color: #fafafa;
@@ -108,4 +151,85 @@
         grid-template-columns: 1fr; /* Cambia a una lista vertical simple */
         gap: 10px;
     }
+}
+
+/* Clases de utilidad para ocultar/mostrar elementos */
+.oculto {
+    display: none !important;
+}
+
+/* Bloque contenedor del resultado */
+.bloque-resultado {
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Variaciones de color según el resultado */
+.bloque-resultado.exito {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 2px solid #34d399;
+}
+
+.bloque-resultado.fallo {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 2px solid #f87171;
+}
+
+/* --- Estados visuales para las tarjetas de opciones --- */
+.opcion-tarjeta.correcta {
+    border-color: #10b981 !important;
+    background-color: #ecfdf5 !important;
+}
+.opcion-tarjeta.correcta .letra-opcion {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.opcion-tarjeta.incorrecta {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+}
+.opcion-tarjeta.incorrecta .letra-opcion {
+    background-color: #ef4444 !important;
+    color: white !important;
+}
+
+/* Bloquear clics tras responder */
+.bloqueado {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+/* --- Botón Siguiente Pregunta --- */
+.btn-siguiente {
+    width: 100%;
+    padding: 14px;
+    background-color: #10b981; /* Verde divertido */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-siguiente:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+/* Animación de entrada */
+@keyframes popIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }

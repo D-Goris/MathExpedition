@@ -1,44 +1,57 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Darle funcionalidad a las tarjetas de temas
-    const tarjetasTemas = document.querySelectorAll('.tema-card');
-
-    tarjetasTemas.forEach(tarjeta => {
-        tarjeta.addEventListener('click', () => {
-            // Capturamos el tema que el usuario eligió usando el data-tema del HTML
-            const temaSeleccionado = tarjeta.getAttribute('data-tema');
-            
-            // Por ahora mostraremos una alerta amigable, 
-            // más adelante aquí harás la redirección al juego o lección (ej: window.location.href = `leccion-${temaSeleccionado}.html`;)
-            alert(`¡Genial! Prepárate para tu aventura en ${temaSeleccionado.toUpperCase()}.`);
-        });
-    });
-
-        // 2. Darle funcionalidad al menú de barra y al Panel Lateral
-    // 2. Darle funcionalidad al menú de barra y al Panel Lateral
+    //elementos del html a manipular
+    const temasContainer = document.getElementById('temas-container');
     const menuBarra = document.querySelector('.menu-barra');
     const panelLateral = document.getElementById('panel-lateral');
     const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
-    const btnCerrarPanel = document.getElementById('btn-cerrar-panel'); // Capturamos la X
+    const btnCerrarPanel = document.getElementById('btn-cerrar-panel');
 
-    // Al hacer clic en las 3 rayitas (Abrir)
-    menuBarra.addEventListener('click', () => {
-        panelLateral.classList.add('abierto');
-        menuBarra.classList.add('oculto'); // Escondemos las barritas
-    });
-
-    // Al hacer clic en la X (Cerrar)
-    btnCerrarPanel.addEventListener('click', () => {
-        panelLateral.classList.remove('abierto');
-        menuBarra.classList.remove('oculto'); // Mostramos las barritas nuevamente
-    });
-
-    // 3. Funcionalidad de Cerrar Sesión (Se mantiene igual)
-    btnCerrarSesion.addEventListener('click', () => {
-        const confirmar = confirm('¿Estás seguro de que deseas salir de la expedición?');
-        
-        if (confirmar) {
-            window.location.href = 'login.html';
+    //elementos a cambiar cuando se conecte al backend
+    const temasDB = [
+        { 
+            idKey: "aritmetica", 
+            titulo: "Aritmética", 
+        },
+        { 
+            idKey: "algebra", 
+            titulo: "Álgebra", 
+        },
+        { 
+            idKey: "geometria", 
+            titulo: "Geometría", 
+        },
+        { 
+            idKey: "estadistica", 
+            titulo: "Estadística", 
         }
+    ];
+
+    //Funcion que renderiza las tarjetas de temas en la pantalla, se ejecuta al cargar la interfaz y cada vez que se actualice el array de temas
+    function renderizarTarjetasTemas() {
+        temasContainer.innerHTML = '';
+
+        temasDB.forEach(tema => {
+            const tarjeta = document.createElement('div');
+            tarjeta.classList.add('tema-card');
+            tarjeta.setAttribute('data-tema', tema.idKey);
+            tarjeta.innerHTML = `<h3>${tema.titulo}</h3>`;
+            tarjeta.addEventListener('click', () => {
+                const temaSeleccionado = tarjeta.getAttribute('data-tema');
+                //Logica del backend para cargar los ejercicios del tema seleccionado, por ahora solo muestra un mensaje de alerta
+                alert(`¡Genial! Prepárate para tu aventura en ${tema.titulo.toUpperCase()}.`);
+                // window.location.href = `pantalla-ejercicios.html?tema=${temaSeleccionado}`;
+            });
+            
+            temasContainer.appendChild(tarjeta);
+        });
+    }
+
+    // Inicializar las tarjetas en pantalla
+    renderizarTarjetasTemas();
+
+    //Funcion para el boton de cerrar sesión, redirige a la pantalla de login
+    btnCerrarSesion.addEventListener('click', () => {
+            window.location.href = 'login.html'; 
     });
 });
