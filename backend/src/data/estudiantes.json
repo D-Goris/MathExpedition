@@ -1,0 +1,18 @@
+[
+  {
+    "idUsuario": "est-001",
+    "password": "$2a$10$abcdefghijklmnopqrstuvwx1234567890",
+    "name": "Pedro Al explorar",
+    "apodo": "PedroMagoMat",
+    "ejerciciosResueltos": [
+      501
+    ]
+  },
+  {
+    "idUsuario": "est-002",
+    "password": "$2a$10$zyxwvutsrqponmlkjihgfedcba0987654321",
+    "name": "Sofía Calculadora",
+    "apodo": "SofiSapiens",
+    "ejerciciosResueltos": []
+  }
+]

@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const nombreSalon = selectEstudiantes.options[selectEstudiantes.selectedIndex].text;
         // --- SIMULACIÓN DE ÉXITO ---
         alert(`¡Misión asignada con éxito!\nLos alumnos pertenecientes a "${nombreSalon}" ahora tienen disponible para resolver el paquete de retos: "${nombreMision}".`);
-        
         // Reiniciar formulario al estado original
         formAsignar.reset();
     });

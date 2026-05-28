@@ -1,0 +1,26 @@
+[
+  {
+    "id": 501,
+    "enunciado": "En una expedición por la selva geométrica, encuentras un cofre ancestral cerrado con un candado rúnico. Si la inscripción dice que el perímetro de un escudo perfectamente triangular equilátero mide 24 cm, ¿cuánto mide cada uno de sus lados?",
+    "opciones": {
+      "A": "6 cm",
+      "B": "8 cm",
+      "C": "12 cm",
+      "D": "10 cm"
+    },
+    "respuestaCorrecta": "B",
+    "temaId": "geometria"
+  },
+  {
+    "id": 502,
+    "enunciado": "Para cruzar el puente del infinito aritmético, el guardián te pide resolver la siguiente ecuación rúnica: 3x - 7 = 14. ¿Cuál es el valor de x?",
+    "opciones": {
+      "A": "5",
+      "B": "6",
+      "C": "7",
+      "D": "8"
+    },
+    "respuestaCorrecta": "C",
+    "temaId": "algebra"
+  }
+]

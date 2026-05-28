@@ -1,0 +1,8 @@
+[
+  {
+    "idUsuario": "prof-001",
+    "password": "$2a$10$teacherpasswordhashhere1234567890",
+    "name": "Carlos Hipatía",
+    "email": "carlos.maestro@mathexpedition.edu"
+  }
+]
