@@ -10,6 +10,7 @@ const Tema = require('../class/Tema');
 const RegistroAvance = require('../class/RegistroAvance');
 const Grupo = require('../class/Grupo');
 const Mision = require('../class/Mision');
+const { request } = require('http');
 
 class Controller {
     constructor() {
@@ -425,7 +426,23 @@ class Controller {
 
         return nuevoEjercicio;
     }
+
+    //funcion para obtener un ejercicio por su id puede cambiar de lugar en el futuro
+
+    /*conseguirEjercicioPorID(req,res){
+    const idEjer = req.params.id;
+    const ejercicio = this.ejercicios.conseguirEjercicioPorID(idEjer);
+    if(ejercicio){
+        res.json(ejercicio);
+    }else{
+        res.status(404).json({error: 'Ejercicio no encontrado'});
+
 }
+
+}*/
+}
+
+
 
 // Inicializar el controlador y exportarlo
 const controllerInstancia = new Controller();
