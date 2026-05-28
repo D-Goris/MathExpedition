@@ -3,21 +3,19 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 
 // Importar las clases necesarias para instanciarlas
-const Ejercicio = require('../class/Ejercicio');
-const Estudiante = require('../class/Estudiante');
-const Maestro = require('../class/Maestro');
-const Tema = require('../class/Tema');
-const RegistroAvance = require('../class/RegistroAvance');
-const Grupo = require('../class/Grupo');
-const Mision = require('../class/Mision');
-const { request } = require('http');
+const Ejercicio = require('../models/Ejercicio');
+const Estudiante = require('../models/Estudiante');
+const Maestro = require('../models/Maestro');
+const RegistroAvance = require('../models/RegistroAvance');
+const Grupo = require('../models/Grupo');
+const Mision = require('../models/Mision');
+const Usuario = require('../models/Usuario');
 
 class Controller {
     constructor() {
         this.ejercicios = [];
         this.estudiantes = [];
         this.maestros = [];
-        this.temas = [];
         this.grupos = [];
         this.misiones = [];
         this.dataPath = path.join(__dirname, '../data');
@@ -31,7 +29,6 @@ class Controller {
         this.cargarEjercicios();
         this.cargarEstudiantes();
         this.cargarMaestros();
-        this.cargarTemas();
         this.cargarGrupos();
         this.cargarMisiones();
         console.log('Datos cargados exitosamente.');
@@ -83,14 +80,23 @@ class Controller {
     cargarEjercicios() {
         this.ejercicios = [];
         const datos = this.leerJSON('ejercicios.json');
-        const atributosRequeridos = ['idEjercicio', 'nivelDificultad', 'enunciado'];
 
         datos.forEach(item => {
-            if (this.validarAtributos(item, atributosRequeridos)) {
+            const id = item.idEjercicio !== undefined ? item.idEjercicio : item.id;
+            const enunciado = item.enunciado;
+            if (id !== undefined && enunciado) {
+                const nivelDificultad = item.nivelDificultad !== undefined ? item.nivelDificultad : 1;
+                const opcionA = item.opcionA || (item.opciones && item.opciones.A) || '';
+                const opcionB = item.opcionB || (item.opciones && item.opciones.B) || '';
+                const opcionC = item.opcionC || (item.opciones && item.opciones.C) || '';
+                const opcionD = item.opcionD || (item.opciones && item.opciones.D) || '';
+                const respuestaCorrecta = item.respuestaCorrecta || '';
+                const misionId = item.misionId || item.temaId || '';
+
                 const ejercicio = new Ejercicio(
-                    item.idEjercicio, item.nivelDificultad, item.enunciado,
-                    item.opcionA || '', item.opcionB || '', item.opcionC || '', item.opcionD || '',
-                    item.respuestaCorrecta || '', item.temaId || ''
+                    id, nivelDificultad, enunciado,
+                    opcionA, opcionB, opcionC, opcionD,
+                    respuestaCorrecta, misionId
                 );
                 this.ejercicios.push(ejercicio);
             } else {
@@ -106,14 +112,21 @@ class Controller {
         datos.forEach(item => {
             // Normalizar idUsuario desde idUsuario o _idUsuario
             const idUsuario = item.idUsuario !== undefined ? item.idUsuario : item._idUsuario;
-            const tieneId = idUsuario !== undefined;
-            const otrosAtributosValidos = ['name', 'grado', 'edad', 'nivel'].every(attr => item.hasOwnProperty(attr));
+            if (idUsuario !== undefined) {
+                const profileName = item.apodo || item.name || '';
+                const realName = item.name || '';
+                const grado = item.grado !== undefined ? item.grado : 3;
+                const edad = item.edad !== undefined ? item.edad : 9;
+                const nivel = item.nivel !== undefined ? item.nivel : 1;
 
-            if (tieneId && otrosAtributosValidos) {
                 // Instanciar el Estudiante
-                const estudiante = new Estudiante(idUsuario, item.name, item.grado, item.edad, item.nivel);
-                estudiante.nombreCompleto = item.nombreCompleto || item.name;
+                const estudiante = new Estudiante(idUsuario, profileName, grado, edad, nivel);
+                estudiante.nombreCompleto = item.nombreCompleto || realName;
                 estudiante.password = item.password || '';
+
+                if (item.ejerciciosResueltos && Array.isArray(item.ejerciciosResueltos)) {
+                    estudiante.ejerciciosResueltos = [...item.ejerciciosResueltos];
+                }
 
                 // Si el JSON tiene registros de avance, instanciarlos y agregarlos al estudiante
                 if (item.registrosAvance && Array.isArray(item.registrosAvance)) {
@@ -155,36 +168,7 @@ class Controller {
         });
     }
 
-    cargarTemas() {
-        this.temas = [];
-        const datos = this.leerJSON('tema.json');
-        const atributosRequeridos = ['idTema', 'nombre'];
 
-        datos.forEach(item => {
-            if (this.validarAtributos(item, atributosRequeridos)) {
-                const tema = new Tema(item.idTema, item.nombre);
-
-                // Si el JSON tiene ejercicios asociados, agregarlos al tema
-                if (item.ejercicios && Array.isArray(item.ejercicios)) {
-                    item.ejercicios.forEach(ej => {
-                        const attrEj = ['idEjercicio', 'nivelDificultad', 'enunciado'];
-                        if (this.validarAtributos(ej, attrEj)) {
-                            const ejercicio = new Ejercicio(
-                                ej.idEjercicio, ej.nivelDificultad, ej.enunciado,
-                                ej.opcionA || '', ej.opcionB || '', ej.opcionC || '', ej.opcionD || '',
-                                ej.respuestaCorrecta || '', ej.temaId || item.idTema
-                            );
-                            tema.ejercicios.push(ejercicio);
-                        }
-                    });
-                }
-
-                this.temas.push(tema);
-            } else {
-                console.warn(`Atributos faltantes en tema: ${JSON.stringify(item)}`);
-            }
-        });
-    }
 
     cargarGrupos() {
         this.grupos = [];
@@ -204,11 +188,11 @@ class Controller {
     cargarMisiones() {
         this.misiones = [];
         const datos = this.leerJSON('misiones.json');
-        const atributosRequeridos = ['idMision', 'nombre', 'descripcion'];
 
         datos.forEach(item => {
-            if (this.validarAtributos(item, atributosRequeridos)) {
-                const mision = new Mision(item.idMision, item.nombre, item.descripcion, item.ejerciciosIds || []);
+            if (item.idMision !== undefined && item.nombre !== undefined) {
+                const descripcion = item.descripcion || '';
+                const mision = new Mision(item.idMision, item.nombre, descripcion, item.ejerciciosIds || []);
                 this.misiones.push(mision);
             } else {
                 console.warn(`Atributos faltantes en mision: ${JSON.stringify(item)}`);
@@ -230,9 +214,7 @@ class Controller {
         return this.guardarJSON('maestro.json', this.maestros);
     }
 
-    guardarTemas() {
-        return this.guardarJSON('tema.json', this.temas);
-    }
+
 
     guardarGrupos() {
         return this.guardarJSON('grupos.json', this.grupos);
@@ -256,9 +238,7 @@ class Controller {
         return this.maestros;
     }
 
-    obtenerTemas() {
-        return this.temas;
-    }
+
 
     obtenerGrupos() {
         return this.grupos;
@@ -274,7 +254,8 @@ class Controller {
         const maestro = this.maestros.find(m => m.email.toLowerCase() === email.toLowerCase());
         if (!maestro) return null;
 
-        const passwordCorrecto = bcrypt.compareSync(password, maestro.password);
+        // Valida con la clase Usuario (soporta hash bcrypt y texto plano de fallback para semillas)
+        const passwordCorrecto = Usuario.verificarPassword(password, maestro.password) || maestro.password === password;
         if (passwordCorrecto) {
             return maestro;
         }
@@ -288,7 +269,7 @@ class Controller {
         }
 
         const nuevoId = this.maestros.length > 0 ? Math.max(...this.maestros.map(m => m.idUsuario)) + 1 : 1;
-        const hashedPassword = bcrypt.hashSync(password, 10);
+        const hashedPassword = Usuario.encriptarPassword(password);
 
         const nuevoMaestro = new Maestro(nuevoId, name, email, hashedPassword);
         this.maestros.push(nuevoMaestro);
@@ -301,8 +282,11 @@ class Controller {
         if (!estudiante) return null;
 
         // Se valida contraseña si el estudiante la tiene configurada
-        if (estudiante.password && estudiante.password !== password) {
-            return null;
+        if (estudiante.password) {
+            const passwordCorrecto = Usuario.verificarPassword(password, estudiante.password) || estudiante.password === password;
+            if (!passwordCorrecto) {
+                return null;
+            }
         }
         return estudiante;
     }
@@ -314,10 +298,11 @@ class Controller {
         }
 
         const nuevoId = this.estudiantes.length > 0 ? Math.max(...this.estudiantes.map(e => e.idUsuario)) + 1 : 1;
+        const hashedPassword = Usuario.encriptarPassword(password);
 
         const nuevoEstudiante = new Estudiante(nuevoId, perfil, 3, 9, 1);
         nuevoEstudiante.nombreCompleto = nombreReal;
-        nuevoEstudiante.password = password;
+        nuevoEstudiante.password = hashedPassword;
 
         this.estudiantes.push(nuevoEstudiante);
         this.guardarEstudiantes();
@@ -386,60 +371,29 @@ class Controller {
         return false;
     }
 
-    // --- Gestión de Temas y Ejercicios ---
+    // --- Gestión de Ejercicios ---
 
-    registrarTema(nombre) {
-        const idTema = nombre.toLowerCase()
-                             .normalize("NFD")
-                             .replace(/[\u0300-\u036f]/g, "")
-                             .replace(/[^a-z0-9]/g, "-")
-                             .replace(/-+/g, "-")
-                             .replace(/^-|-$/g, "");
-
-        const existe = this.temas.some(t => t.idTema === idTema);
-        if (existe) {
-            return this.temas.find(t => t.idTema === idTema);
-        }
-
-        const nuevoTema = new Tema(idTema, nombre);
-        this.temas.push(nuevoTema);
-        this.guardarTemas();
-        return nuevoTema;
-    }
-
-    registrarEjercicio(nivelDificultad, enunciado, opcionA, opcionB, opcionC, opcionD, respuestaCorrecta, temaId) {
-        const nuevoId = this.ejercicios.length > 0 ? Math.max(...this.ejercicios.map(e => e.idEjercicio)) + 1 : 1;
+    registrarEjercicio(nivelDificultad, enunciado, opcionA, opcionB, opcionC, opcionD, respuestaCorrecta, misionId) {
+        const nuevoId = this.ejercicios.length > 0 ? Math.max(...this.ejercicios.map(e => e.id || e.idEjercicio || 0)) + 1 : 1;
 
         const nuevoEjercicio = new Ejercicio(
             nuevoId, parseInt(nivelDificultad), enunciado,
-            opcionA, opcionB, opcionC, opcionD, respuestaCorrecta, temaId
+            opcionA, opcionB, opcionC, opcionD, respuestaCorrecta, misionId
         );
 
         this.ejercicios.push(nuevoEjercicio);
         this.guardarEjercicios();
 
-        const tema = this.temas.find(t => t.idTema === temaId);
-        if (tema) {
-            tema.ejercicios.push(nuevoEjercicio);
-            this.guardarTemas();
+        const mision = this.misiones.find(m => m.idMision == misionId);
+        if (mision) {
+            mision.agregarEjercicio(nuevoEjercicio);
+            this.guardarMisiones();
         }
 
         return nuevoEjercicio;
     }
 
-    //funcion para obtener un ejercicio por su id puede cambiar de lugar en el futuro
-
-    /*conseguirEjercicioPorID(req,res){
-    const idEjer = req.params.id;
-    const ejercicio = this.ejercicios.conseguirEjercicioPorID(idEjer);
-    if(ejercicio){
-        res.json(ejercicio);
-    }else{
-        res.status(404).json({error: 'Ejercicio no encontrado'});
-
-}
-
-}*/
+    
 }
 
 

@@ -22,5 +22,17 @@
     },
     "respuestaCorrecta": "C",
     "temaId": "algebra"
+  },
+  {
+    "id": 503,
+    "enunciado": "Si un cuadrado perfecto tiene un área de 16 cm2, ¿cuánto mide su lado?",
+    "opciones": {
+      "A": "2 cm",
+      "B": "4 cm",
+      "C": "8 cm",
+      "D": "16 cm"
+    },
+    "respuestaCorrecta": "B",
+    "temaId": "1"
   }
 ]

@@ -1,4 +1,4 @@
-export class Grupo {
+class Grupo {
     constructor(idGrupo, nombre, descripcion, estudiantesIds = [], misionesIds = []) {
         this.idGrupo = idGrupo;
         this.nombre = nombre;
@@ -7,3 +7,5 @@ export class Grupo {
         this.misionesIds = misionesIds; // Array de IDs de misiones asignadas
     }
 }
+
+export default Grupo;

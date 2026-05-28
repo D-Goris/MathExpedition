@@ -45,8 +45,48 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        //logica de guardado de datos del estudiantes (backend)
-        
-        formEstudiante.reset();
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+            ? 'http://localhost:3000/api'
+            : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
+
+        const btnSubmit = formEstudiante.querySelector('button[type="submit"]');
+        const textoOriginalBoton = btnSubmit.textContent;
+        btnSubmit.textContent = 'Registrando Explorador...';
+        btnSubmit.disabled = true;
+
+        fetch(`${API_BASE}/auth/registrar-estudiante`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombreCompleto: nombreReal,
+                nombrePerfil: perfil,
+                password: password
+            })
+        })
+        .then(async (res) => {
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.message || 'Error al registrar estudiante.');
+            }
+            return data;
+        })
+        .then(data => {
+            if (data.success) {
+                //alert('¡Explorador registrado con éxito!'); //Comento esto por tema de presentación, pero se puede descomentar para mostrar un mensaje de éxito.
+                formEstudiante.reset();
+            } else {
+                mostrarError(data.message || 'Error al registrar.');
+            }
+        })
+        .catch(err => {
+            console.error('Error en registro:', err);
+            mostrarError(err.message || 'Error de conexión con el servidor.');
+        })
+        .finally(() => {
+            btnSubmit.textContent = textoOriginalBoton;
+            btnSubmit.disabled = false;
+        });
     });
 });

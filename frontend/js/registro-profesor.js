@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorError = document.getElementById('contenedor-error');
     const textoError = document.getElementById('texto-error');
     
+    //Funciones para mostrar el mensaje de errores
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
     }
 
+    //Función para ocultar el mensaje de error
     function ocultarError() {
         contenedorError.style.display = 'none';
     }
@@ -55,9 +57,48 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Aquí iría la lógica para enviar los datos al backend y registrar al profesor
-        // Por ahora, redirigimos a la página de login como simulación de registro exitoso
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+            ? 'http://localhost:3000/api'
+            : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
 
-        window.location.href = 'login.html'; 
+        const btnSubmit = formRegistro.querySelector('button[type="submit"]');
+        const textoOriginalBoton = btnSubmit.textContent;
+        btnSubmit.textContent = 'Registrando...';
+        btnSubmit.disabled = true;
+
+        fetch(`${API_BASE}/auth/register-maestro`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: nombre,
+                email: correo,
+                password: password
+            })
+        })
+        .then(async (res) => {
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.message || 'Error al registrar profesor.');
+            }
+            return data;
+        })
+        .then(data => {
+            if (data.success) {
+                //alert('¡Profesor registrado exitosamente! Ahora puedes iniciar sesión.'); //Comento esto por tema de presentación, pero se puede descomentar para mostrar un mensaje de éxito.
+                window.location.href = 'login.html'; 
+            } else {
+                mostrarError(data.message || 'Error al registrar.');
+            }
+        })
+        .catch(err => {
+            console.error('Error en registro:', err);
+            mostrarError(err.message || 'Error de conexión con el servidor.');
+        })
+        .finally(() => {
+            btnSubmit.textContent = textoOriginalBoton;
+            btnSubmit.disabled = false;
+        });
     });
 });

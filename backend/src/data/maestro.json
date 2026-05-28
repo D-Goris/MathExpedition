@@ -1,8 +1,14 @@
 [
   {
     "idUsuario": "prof-001",
-    "password": "$2a$10$teacherpasswordhashhere1234567890",
+    "password": "$2a$10$qxfRy9AYqHVsGk7nJ7i9WeDVUdpgzNBKIJv3cDme0MdmQtu6GBgTG",
     "name": "Carlos Hipatía",
     "email": "carlos.maestro@mathexpedition.edu"
+  },
+  {
+    "idUsuario": "prof-002",
+    "password": "$2b$10$w1msP7WIQfDzU.SW8n9cCOiL3Wgy6nIqMko.RF9oPZQZRF1BxeZRO",
+    "name": "Daniel Goris",
+    "email": "danielgoris@gmail.com"
   }
 ]

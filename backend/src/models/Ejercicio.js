@@ -1,21 +1,24 @@
 let ejerciciosList = [];
 
-const mision = require("./Mision")
-export class Ejercicio {
-
-    
-
-    constructor(id, enunciado, opciones, respuestaCorrecta, temaId) {
+class Ejercicio {
+    constructor(id, nivelDificultad, enunciado, opcionA, opcionB, opcionC, opcionD, respuestaCorrecta, misionId) {
         this.id = id;                               
+        this.nivelDificultad = nivelDificultad;
         this.enunciado = enunciado;
+        this.opcionA = opcionA;
+        this.opcionB = opcionB;
+        this.opcionC = opcionC;
+        this.opcionD = opcionD;
+        
+        // Mantener también el objeto agrupado para compatibilidad con el frontend
         this.opciones = {                             
-            A: opciones.A,
-            B: opciones.B,
-            C: opciones.C,
-            D: opciones.D
+            A: opcionA,
+            B: opcionB,
+            C: opcionC,
+            D: opcionD
         };
         this.respuestaCorrecta = respuestaCorrecta;
-        this.temaId = temaId;
+        this.misionId = misionId;
     }
 
     /**
@@ -25,39 +28,37 @@ export class Ejercicio {
     obtenerVersionSegura() {
         return {
             id: this.id,
+            nivelDificultad: this.nivelDificultad,
             enunciado: this.enunciado,
             opciones: this.opciones,
-            temaId: this.temaId
+            misionId: this.misionId
         };
     }
     
-    /*metodo para buscar un ejercicio especifico por su id*/
-
-    obtenerJuegoPorID(id){
-        const ejercicio = ejercicios.find(ej => ej.id === id);
-        for (let ejercicio of ejerciciosList) {
-            if (ejercicio.id === id) {
-                return ejercicio;
+    /**
+     * Busca un ejercicio específico por su id en la lista estática.
+     */
+    obtenerJuegoPorID(id) {
+        for (let ej of ejerciciosList) {
+            if (ej.id === id) {
+                return ej;
             }
+        }
+        return null;
     }
-    return null; // Si no se encuentra el ejercicio, retorna null
-}
 
-//metodo para comprobar si una respuesta esta correcta
-
+    /**
+     * Comprueba si una opción seleccionada es correcta.
+     */
     comprobarRespuesta(opcionSeleccionada) {
-        //const esCorrecta = opcionSeleccionada === this.respuestaCorrecta;
         if (opcionSeleccionada === this.respuestaCorrecta) {
             return true;
         } else {
-            console.log('respuesta incorrecta');
+            console.log('Respuesta incorrecta');
             return false;
         }
-    
+    }
 }
 
-
-
-
-
-}
+export default Ejercicio;
+export { ejerciciosList };

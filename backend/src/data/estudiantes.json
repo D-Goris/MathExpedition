@@ -1,18 +1,48 @@
 [
   {
-    "idUsuario": "est-001",
-    "password": "$2a$10$abcdefghijklmnopqrstuvwx1234567890",
-    "name": "Pedro Al explorar",
-    "apodo": "PedroMagoMat",
+    "_idUsuario": "est-001",
+    "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
+    "name": "PedroMagoMat",
+    "grado": 3,
+    "edad": 9,
+    "nivel": 1,
+    "nombreCompleto": "Pedro Al explorar",
     "ejerciciosResueltos": [
       501
-    ]
+    ],
+    "registrosAvance": []
   },
   {
-    "idUsuario": "est-002",
-    "password": "$2a$10$zyxwvutsrqponmlkjihgfedcba0987654321",
-    "name": "Sofía Calculadora",
-    "apodo": "SofiSapiens",
-    "ejerciciosResueltos": []
+    "_idUsuario": "est-002",
+    "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
+    "name": "SofiSapiens",
+    "grado": 3,
+    "edad": 9,
+    "nivel": 1,
+    "nombreCompleto": "Sofía Calculadora",
+    "ejerciciosResueltos": [],
+    "registrosAvance": []
+  },
+  {
+    "_idUsuario": "est-003",
+    "password": "$2a$10$wKnqm.k2pOQN4hauspHn8ORERBvRm/Wax7kKkKv936XIC31.9xjYS",
+    "name": "TheGOAT",
+    "grado": 3,
+    "edad": 9,
+    "nivel": 1,
+    "nombreCompleto": "Rafael Guacaran",
+    "ejerciciosResueltos": [],
+    "registrosAvance": []
+  },
+  {
+    "_idUsuario": "est-004",
+    "password": "$2b$10$CPV18IUuGtfCVdD5lMdO0O1NWpitWERQka6d6hNkBGyoZoxnywM56",
+    "name": "Rodrigo",
+    "grado": 3,
+    "edad": 9,
+    "nivel": 1,
+    "nombreCompleto": "Rodrigo Moraurt",
+    "ejerciciosResueltos": [],
+    "registrosAvance": []
   }
 ]

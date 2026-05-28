@@ -1,25 +1,29 @@
-import ejercicios from "./Ejercicio";
+class Mision {
+    constructor(idMision, nombre, descripcion = '', ejerciciosIds = []) {
+        this.idMision = idMision;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.conjuntoDeEjer = ejerciciosIds;
+        this.ejerciciosIds = ejerciciosIds;
+    }
 
-export class Mision{
+    // Método para añadir un ejercicio a la misión
+    agregarEjercicio(ejercicio) {
+        const id = ejercicio.id || ejercicio.idEjercicio;
+        if (id !== undefined) {
+            if (!this.conjuntoDeEjer.includes(id)) {
+                this.conjuntoDeEjer.push(id);
+            }
+            if (!this.ejerciciosIds.includes(id)) {
+                this.ejerciciosIds.push(id);
+            }
+        }
+    }
 
-constructor(idMision, nombre,){
-  this.idMision = idMision;
-  this.nombre = nombre;
-  this.conjuntoDeEjer = [];
-
+    // Envia todos los ids de ejercicios almacenados en la misión
+    cargarEjerciciosDeMision() {
+        return this.conjuntoDeEjer;
+    }
 }
 
-//Metodo para añadir un ejercicio a la mision
-
-  agregarEjercicio(ejercicio){
-    const adicion = ejercicio.id;
-    this.conjuntoDeEjer.push(adicion);
-}
-
-  //envia todods los ids de ejercicios almacenados en la mision
-
-  cargarEjerciciosDeMision(){
-    return this.conjuntoDeEjer;
-
-}
-}
+export default Mision;

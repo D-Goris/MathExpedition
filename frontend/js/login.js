@@ -77,29 +77,65 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        if (rolActual === 'estudiante') {
-            // Lógica para Estudiantes
-            //if ( FUNCION DE VALIDACION DE CREDENCIALES DE ESTUDIANTE DEL BACKEND ) {
-            //window.location.href = 'menu-profesor.html';
-            //}else{
-            //mostrarError('Credenciales incorrectas. Por favor, intenta de nuevo.');
-            //return;
-            //}
-        } else {
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+            ? 'http://localhost:3000/api'
+            : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
+
+        if (rolActual === 'profesor') {
             // Validación específica para Profesor: formato de correo
             const regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!regexCorreo.test(identificador)) {
                 mostrarError('Por favor, ingresa un correo electrónico válido.');
                 return;
             }
-
-            // Lógica para Profesores
-            //if ( FUNCION DE VALIDACION DE CREDENCIALES DE PROFESOR DEL BACKEND ) {
-            //window.location.href = 'menu-profesor.html';
-            //}else{
-            //mostrarError('Credenciales incorrectas. Por favor, intenta de nuevo.');
-            //return;
-            //}
         }
+
+        // Mostrar indicador visual en el botón
+        const textoOriginalBoton = btnLogin.textContent;
+        btnLogin.textContent = 'Verificando...';
+        btnLogin.disabled = true;
+
+        fetch(`${API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rol: rolActual,
+                identificador: identificador,
+                password: password
+            })
+        })
+        .then(async (res) => {
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.message || 'Error al iniciar sesión.');
+            }
+            return data;
+        })
+        .then(data => {
+            if (data.success) {
+                // Guardar datos en el almacenamiento local
+                localStorage.setItem('usuarioLogueado', JSON.stringify(data.user));
+                localStorage.setItem('rolUsuario', rolActual);
+
+                // Redirigir según el rol
+                if (rolActual === 'estudiante') {
+                    window.location.href = 'seleccion-tema-estudiante.html';
+                } else {
+                    window.location.href = 'menu-profesor.html';
+                }
+            } else {
+                mostrarError(data.message || 'Credenciales incorrectas. Por favor, intenta de nuevo.');
+            }
+        })
+        .catch(err => {
+            console.error('Error al iniciar sesión:', err);
+            mostrarError(err.message || 'Error de conexión con el servidor.');
+        })
+        .finally(() => {
+            btnLogin.textContent = textoOriginalBoton;
+            btnLogin.disabled = false;
+        });
     });
 });

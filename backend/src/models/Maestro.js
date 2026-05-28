@@ -1,14 +1,14 @@
-// src/models/Maestro.js
-import { Usuario } from './Usuario.js';
+// src/modules/Maestro.js
+import Usuario from './Usuario.js';
 
-export class Maestro extends Usuario {
-    constructor(idUsuario, password, name, email) {
+class Maestro extends Usuario {
+    constructor(idUsuario, name, email, password) {
         super(idUsuario, password); 
         this.name = name;
         this.email = email;
     }
 
-    // Métodos administrativos nativos que propuso tu compañero para el futuro
+    // Métodos administrativos nativos
     verAvanceIndividual(estudiante) {
         console.log(`Mostrando avance individual de: ${estudiante.name}`);
         return {}; // Stub para desarrollo posterior
@@ -24,3 +24,5 @@ export class Maestro extends Usuario {
         return [];
     }
 }
+
+export default Maestro;
