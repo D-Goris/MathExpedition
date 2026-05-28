@@ -3,13 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorPerfiles = document.getElementById('lista-perfiles-estudiantes');
     const buscador = document.getElementById('buscador-perfiles');
 
-    // Simulación de Base de Datos de Alumnos (Proviene del back)
-    const estudiantesDB = [
-        { nombreCompleto: "Carlos Mendoza", nombrePerfil: "ExploradorMate", grupo: "3er Grado A" },
-        { nombreCompleto: "Sofía Rodríguez", nombrePerfil: "MathWizard", grupo: "3er Grado B" },
-        { nombreCompleto: "Lucas Gómez", nombrePerfil: "ReyNumeros", grupo: "" },
-        { nombreCompleto: "Ana Martínez", nombrePerfil: "DeltaMath", grupo: "3er Grado A" }
-    ];
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+        ? 'http://localhost:3000/api'
+        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
+
+    let estudiantesDB = [];
+
+    // Función para obtener los estudiantes de la API
+    async function obtenerEstudiantes() {
+        try {
+            const res = await fetch(`${API_BASE}/estudiantes`);
+            estudiantesDB = await res.json();
+            cargarPerfiles(estudiantesDB);
+        } catch (error) {
+            console.error('Error cargando perfiles:', error);
+            contenedorPerfiles.innerHTML = '<p class="sin-resultados">❌ Error al conectar con el servidor para cargar perfiles.</p>';
+        }
+    }
 
     // Función para renderizar perfiles en el HTML
     function cargarPerfiles(listaEstudiantes) {
@@ -26,14 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const divFila = document.createElement('div');
             divFila.className = 'fila-perfil';
             
-            const tieneGrupo = estudiante.grupo.trim() !== "";
-            const textoGrupo = tieneGrupo ? estudiante.grupo : "Sin Asignar";
+            const grupoDelEstudiante = estudiante.grupo || "";
+            const tieneGrupo = grupoDelEstudiante.trim() !== "";
+            const textoGrupo = tieneGrupo ? grupoDelEstudiante : "Sin Asignar";
             const claseBadge = tieneGrupo ? "grupo-alumno-badge asignado" : "grupo-alumno-badge sin-asignar";
 
             divFila.innerHTML = `
                 <div class="info-alumno">
                     <h4>👦 ${estudiante.nombreCompleto}</h4>
-                    <p>Usuario: <strong>${estudiante.nombrePerfil}</strong></p>
+                    <p>Usuario: <strong>${estudiante.name}</strong></p>
                 </div>
                 <div class="${claseBadge}">
                     <span>🏫 ${textoGrupo}</span>
@@ -43,17 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Inicializar la pantalla
-    cargarPerfiles(estudiantesDB);
+    // Inicializar la pantalla cargando perfiles desde el API
+    obtenerEstudiantes();
 
-    // LÓGICA DEL BUSCADOR: Permite buscar también por el nombre del grupo (No hace falta cambiarlo con el back)
+    // LÓGICA DEL BUSCADOR: Permite buscar también por el nombre del grupo
     buscador.addEventListener('input', () => {
         const textoBusqueda = buscador.value.toLowerCase().trim();
 
         const estudiantesFiltrados = estudiantesDB.filter(estudiante => {
-            return estudiante.nombreCompleto.toLowerCase().includes(textoBusqueda) || 
-                   estudiante.nombrePerfil.toLowerCase().includes(textoBusqueda) ||
-                   estudiante.grupo.toLowerCase().includes(textoBusqueda);
+            const nombre = estudiante.nombreCompleto ? estudiante.nombreCompleto.toLowerCase() : "";
+            const perfil = estudiante.name ? estudiante.name.toLowerCase() : "";
+            const grupo = estudiante.grupo ? estudiante.grupo.toLowerCase() : "";
+
+            return nombre.includes(textoBusqueda) || 
+                   perfil.includes(textoBusqueda) ||
+                   grupo.includes(textoBusqueda);
         });
 
         cargarPerfiles(estudiantesFiltrados);

@@ -12,34 +12,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const bloqueResultado = document.getElementById('bloque-resultado');
     const mensajeResultado = document.getElementById('mensaje-resultado');
     const btnSiguiente = document.getElementById('btn-siguiente-pregunta');
+    const contenedorPrincipal = document.querySelector('.contenedor-ejercicio');
+
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+        ? 'http://localhost:3000/api'
+        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
 
     //Variables necesarios para la logica
     let opcionSeleccionada = null;
     let preguntaActualIndex = 0;
+    let preguntasDB = [];
+    let idMision = new URLSearchParams(window.location.search).get('mision');
+    
+    const usuarioRaw = localStorage.getItem('usuarioLogueado');
+    if (!usuarioRaw) {
+        window.location.href = 'login.html';
+        return;
+    }
+    const usuario = JSON.parse(usuarioRaw);
+    const idUsuario = usuario._idUsuario || usuario.idUsuario || usuario.id;
 
-    // BANCO DE PREGUNTAS SIMULADO (Aumentado para probar el botón "Siguiente") (cambiar cuando backend esté listo)
-    const preguntasDB = [
-        {
-            enunciado: "Si Juan tiene 3 manzanas y Pedro le regala el doble de lo que tiene, ¿Cuántas manzanas tiene Juan en total ahora?",
-            opcionA: "6 manzanas", opcionB: "9 manzanas", opcionC: "12 manzanas", opcionD: "5 manzanas",
-            respuestaCorrecta: "B"
-        },
-        {
-            enunciado: "En un salón hay 4 mesas. Si cada mesa tiene 5 sillas, ¿Cuántas sillas hay en total en el salón?",
-            opcionA: "20 sillas", opcionB: "9 sillas", opcionC: "15 sillas", opcionD: "25 sillas",
-            respuestaCorrecta: "A"
+    async function iniciarMision() {
+        if (!idMision) {
+            contenedorPrincipal.innerHTML = '<div style="text-align: center; color: white; padding: 2rem;"><h2>⚠️ Misión no válida</h2><p>Vuelve al menú y selecciona una misión válida.</p></div>';
+            return;
         }
-    ];
+
+        try {
+            const res = await fetch(`${API_BASE}/misiones/${idMision}/ejercicios`);
+            if (!res.ok) throw new Error('Error al obtener ejercicios');
+            const data = await res.json();
+
+            preguntasDB = data;
+
+            if (preguntasDB.length === 0) {
+                contenedorPrincipal.innerHTML = '<div style="text-align: center; color: white; padding: 2rem;"><h2>📭 Misión Vacía</h2><p>Esta misión aún no tiene retos para ti.</p></div>';
+                return;
+            }
+
+            cargarPregunta();
+        } catch (error) {
+            console.error('Error:', error);
+            contenedorPrincipal.innerHTML = '<div style="text-align: center; color: white; padding: 2rem;"><h2>❌ Error</h2><p>Hubo un problema de conexión con el servidor.</p></div>';
+        }
+    }
 
     // Carga la pregunta actual limpiando estados antiguos
     function cargarPregunta() {
         const pregunta = preguntasDB[preguntaActualIndex];
         
         textoEnunciado.textContent = pregunta.enunciado;
-        textoA.textContent = pregunta.opcionA;
-        textoB.textContent = pregunta.opcionB;
-        textoC.textContent = pregunta.opcionC;
-        textoD.textContent = pregunta.opcionD;
+        // Los ejercicios en el backend tienen opciones.A, opciones.B, etc.
+        textoA.textContent = pregunta.opciones ? pregunta.opciones.A : pregunta.opcionA;
+        textoB.textContent = pregunta.opciones ? pregunta.opciones.B : pregunta.opcionB;
+        textoC.textContent = pregunta.opciones ? pregunta.opciones.C : pregunta.opcionC;
+        textoD.textContent = pregunta.opciones ? pregunta.opciones.D : pregunta.opcionD;
+        
         opcionSeleccionada = null;
         bloqueOpciones.classList.remove('bloqueado');
         bloqueResultado.classList.add('oculto');
@@ -54,37 +82,52 @@ document.addEventListener('DOMContentLoaded', () => {
     // Oyente de selección de tarjetas
     opcionesTarjetas.forEach(tarjeta => {
         tarjeta.addEventListener('click', () => {
+            if (bloqueOpciones.classList.contains('bloqueado')) return;
             opcionesTarjetas.forEach(t => t.classList.remove('seleccionada'));
             tarjeta.classList.add('seleccionada');
             opcionSeleccionada = tarjeta.getAttribute('data-opcion');
         });
     });
 
-    // COMPROBACIÓN VISUAL (Sin Alerts molesto)
-    btnEnviar.addEventListener('click', () => {
+    // COMPROBACIÓN VISUAL Y GUARDADO
+    btnEnviar.addEventListener('click', async () => {
         if (!opcionSeleccionada) {
             return;
         }
 
         const preguntaInfo = preguntasDB[preguntaActualIndex];
+        const respuestaCorrecta = preguntaInfo.respuestaCorrecta;
+
         bloqueOpciones.classList.add('bloqueado');
         btnEnviar.classList.add('oculto');
         bloqueResultado.classList.remove('oculto');
 
         const tarjetaElegida = document.querySelector(`.opcion-tarjeta[data-opcion="${opcionSeleccionada}"]`);
-        const tarjetaCorrecta = document.querySelector(`.opcion-tarjeta[data-opcion="${preguntaInfo.respuestaCorrecta}"]`);
+        const tarjetaCorrecta = document.querySelector(`.opcion-tarjeta[data-opcion="${respuestaCorrecta}"]`);
 
-        if (opcionSeleccionada === preguntaInfo.respuestaCorrecta) {
+        if (opcionSeleccionada === respuestaCorrecta) {
             // Caso Éxito
             bloqueResultado.classList.add('exito');
             mensajeResultado.innerHTML = "🎉 ¡Excelente trabajo explorador! Tu respuesta es correcta.";
             tarjetaElegida.classList.add('correcta');
+
+            // Llamada al backend para guardar el progreso
+            try {
+                await fetch(`${API_BASE}/estudiantes/${idUsuario}/avance`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idEjercicio: preguntaInfo.id })
+                });
+            } catch (err) {
+                console.error('No se pudo guardar el progreso:', err);
+            }
+
         } else {
             // Caso Fallo
             bloqueResultado.classList.add('fallo');
-            mensajeResultado.innerHTML = `🧭 ¡Oh no! Revisa tus cálculos. La respuesta correcta era la (${preguntaInfo.respuestaCorrecta}).`;
+            mensajeResultado.innerHTML = `🧭 ¡Oh no! Revisa tus cálculos. La respuesta correcta era la (${respuestaCorrecta}).`;
             tarjetaElegida.classList.add('incorrecta');
-            tarjetaCorrecta.classList.add('correcta');
+            if (tarjetaCorrecta) tarjetaCorrecta.classList.add('correcta');
         }
     });
 
@@ -97,15 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
             cargarPregunta();
         } else {
             // Si ya no hay más preguntas, la lección terminó y vuelve al mapa
+            alert('¡Has completado todos los ejercicios de esta misión!');
             window.location.href = 'seleccion-tema-estudiante.html';
         }
     });
 
     // Botón Volver normal
     btnVolverMenu.addEventListener('click', () => {
-            window.location.href = 'seleccion-tema-estudiante.html';
+        window.location.href = 'seleccion-tema-estudiante.html';
     });
 
     // Primera carga al abrir
-    cargarPregunta();
+    iniciarMision();
 });

@@ -44,5 +44,16 @@
     "nombreCompleto": "Rodrigo Moraurt",
     "ejerciciosResueltos": [],
     "registrosAvance": []
+  },
+  {
+    "_idUsuario": "est-005",
+    "password": "$2b$10$7sqqcTfKiDx39SUZXgDxQuMXENFX5I7uTjqhK/2KWfLYVn2o1y2qC",
+    "name": "samuel",
+    "grado": 3,
+    "edad": 9,
+    "nivel": 1,
+    "nombreCompleto": "Samuel Mundaray",
+    "ejerciciosResueltos": [],
+    "registrosAvance": []
   }
 ]

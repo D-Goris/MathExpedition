@@ -13,32 +13,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputOpD = document.getElementById('opcion-d');
     const selectCorrecta = document.getElementById('respuesta-correcta');
     
-    //ELementos de la base de datos simulada (mockup) para poblar el select de temas (cambiar con el backend real)
-    const temasDB = [
-        { idKey: "aritmetica", nombre: "Aritmética" },
-        { idKey: "algebra", nombre: "Álgebra" },
-        { idKey: "geometria", nombre: "Geometría" },
-        { idKey: "estadistica", nombre: "Estadística" }  
-    ];
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+        ? 'http://localhost:3000/api'
+        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
 
-    //Funcion para cargar dinámicamente los temas en el select.
-    function cargarTemasMockup() {
-        temasDB.forEach(tema => {
-            const nuevaOpcion = document.createElement('option');
-            nuevaOpcion.value = tema.idKey; // Corregido: usando la variable correcta 'tema'
-            nuevaOpcion.textContent = tema.nombre;
-            selectTema.appendChild(nuevaOpcion);
-        });
-        
-        // Insertar al final la opción interactiva para añadir temas nuevos
-        const opcionNueva = document.createElement('option');
-        opcionNueva.value = "nueva";
-        opcionNueva.textContent = "➕ Añadir nuevo tema...";
-        selectTema.appendChild(opcionNueva);
+    //Funcion para cargar dinámicamente las misiones (temas)
+    async function cargarTemas() {
+        try {
+            const res = await fetch(`${API_BASE}/misiones`);
+            const misionesDB = await res.json();
+            
+            selectTema.innerHTML = '<option value="" disabled selected>-- Elige una Misión / Tema --</option>';
+
+            misionesDB.forEach(mision => {
+                const nuevaOpcion = document.createElement('option');
+                nuevaOpcion.value = mision.idMision;
+                nuevaOpcion.textContent = mision.nombre;
+                selectTema.appendChild(nuevaOpcion);
+            });
+            
+            // Insertar al final la opción interactiva para añadir temas nuevos (futuro feature)
+            const opcionNueva = document.createElement('option');
+            opcionNueva.value = "nueva";
+            opcionNueva.textContent = "➕ Añadir nuevo tema... (No disponible aún)";
+            selectTema.appendChild(opcionNueva);
+        } catch (error) {
+            console.error('Error cargando temas:', error);
+            mostrarError('Error al conectar con el servidor.');
+        }
     }
 
     // Inicializar el cargado dinámico
-    cargarTemasMockup();
+    cargarTemas();
 
     //Funcion para mostrar mensajes de error.
     function mostrarError(mensaje) {
@@ -63,14 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Validación y envío del formulario
-    formEjercicio.addEventListener('submit', (evento) => {
+    formEjercicio.addEventListener('submit', async (evento) => {
         evento.preventDefault();
         ocultarError();
 
         // Determinar cuál es el tema definitivo que se enviará
         let temaFinal = selectTema.value;
         if (temaFinal === 'nueva') {
-            temaFinal = inputNuevoTema.value.trim();
+            mostrarError('La creación de nuevas misiones no está implementada en esta versión.');
+            return;
         }
 
         const pregunta = textPregunta.value.trim();
@@ -95,11 +102,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Aquí se construiría el objeto ejercicio con los datos recopilados y se enviaría al backend.
+        try {
+            const btnSubmit = formEjercicio.querySelector('button[type="submit"]');
+            const originalText = btnSubmit.textContent;
+            btnSubmit.textContent = 'Guardando...';
+            btnSubmit.disabled = true;
 
+            const res = await fetch(`${API_BASE}/misiones/${temaFinal}/ejercicios`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pregunta, opA, opB, opC, opD, correcta })
+            });
 
-        // Reseteamos el formulario al estado inicial limpio
-        formEjercicio.reset();
-        inputNuevoTema.style.display = 'none';
+            const data = await res.json();
+            
+            btnSubmit.textContent = originalText;
+            btnSubmit.disabled = false;
+
+            if (res.ok) {
+                alert('¡Ejercicio guardado exitosamente en la misión!');
+                formEjercicio.reset();
+                inputNuevoTema.style.display = 'none';
+            } else {
+                mostrarError(`Error al guardar: ${data.msg || 'Desconocido'}`);
+            }
+        } catch (error) {
+            console.error('Error al enviar ejercicio:', error);
+            mostrarError('Error de conexión con el servidor.');
+        }
     });
 });

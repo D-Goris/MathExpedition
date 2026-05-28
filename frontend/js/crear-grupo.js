@@ -8,31 +8,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const textoError = document.getElementById('texto-error');
     const listaContenedor = document.getElementById('lista-grupos-disponibles');
 
-    // Simulación de Base de Datos inicial (Modificar con el backend posteriormente)
-    const baseDatosGrupos = [
-        { nombre: "3er Grado A", descripcion: "Clase matutina de matemáticas básicas." },
-        { nombre: "4to Grado B", descripcion: "Salón avanzado para resolución de problemas de lógica." }
-    ];
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+        ? 'http://localhost:3000/api'
+        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
 
     // Función para renderizar los grupos en la lista disponible
-    function actualizarListaGrupos() {
-        listaContenedor.innerHTML = '';
-        
-        if(baseDatosGrupos.length === 0) {
-            listaContenedor.innerHTML = '<p>No hay grupos disponibles. ¡Crea el primero!</p>';
-            return;
-        }
+    async function actualizarListaGrupos() {
+        try {
+            const res = await fetch(`${API_BASE}/grupos`);
+            const baseDatosGrupos = await res.json();
 
-        baseDatosGrupos.forEach(grupo => {
-            const divTarjeta = document.createElement('div');
-            divTarjeta.className = 'tarjeta-grupo';
+            listaContenedor.innerHTML = '';
             
-            divTarjeta.innerHTML = `
-                <h4>📌 ${grupo.nombre}</h4>
-                <p>${grupo.descripcion}</p>
-            `;
-            listaContenedor.appendChild(divTarjeta);
-        });
+            if(baseDatosGrupos.length === 0) {
+                listaContenedor.innerHTML = '<p>No hay grupos disponibles. ¡Crea el primero!</p>';
+                return;
+            }
+
+            baseDatosGrupos.forEach(grupo => {
+                const divTarjeta = document.createElement('div');
+                divTarjeta.className = 'tarjeta-grupo';
+                
+                divTarjeta.innerHTML = `
+                    <h4>📌 ${grupo.nombre}</h4>
+                    <p>${grupo.descripcion}</p>
+                `;
+                listaContenedor.appendChild(divTarjeta);
+            });
+        } catch (error) {
+            console.error('Error cargando grupos:', error);
+            listaContenedor.innerHTML = '<p>Error al cargar los grupos desde el servidor.</p>';
+        }
     }
 
     // Funciones para mostrar y el mensaje de error
@@ -50,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarListaGrupos();
 
     // Procesamiento del formulario
-    formCrearGrupo.addEventListener('submit', (evento) => {
+    formCrearGrupo.addEventListener('submit', async (evento) => {
         evento.preventDefault();
         ocultarError();
 
@@ -71,29 +77,32 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        //Valida que no exista un grupo creado previamente con esa misma información (nombre idéntico)
-        const grupoDuplicado = baseDatosGrupos.find(
-            grupo => grupo.nombre.toLowerCase() === nombreValor.toLowerCase()
-        );
+        try {
+            const btnSubmit = formCrearGrupo.querySelector('button[type="submit"]');
+            const originalText = btnSubmit.textContent;
+            btnSubmit.textContent = 'Creando...';
+            btnSubmit.disabled = true;
 
-        if (grupoDuplicado) {
-            mostrarError(`Error en el campo "Nombre del Grupo": El grupo "${nombreValor}" ya existe en el sistema.`);
-            inputNombre.focus();
-            return;
+            const res = await fetch(`${API_BASE}/grupos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre: nombreValor, descripcion: descripcionValor })
+            });
+
+            const data = await res.json();
+            
+            btnSubmit.textContent = originalText;
+            btnSubmit.disabled = false;
+
+            if (data.success) {
+                formCrearGrupo.reset();
+                actualizarListaGrupos();
+            } else {
+                mostrarError(`Error al crear: ${data.message}`);
+            }
+        } catch (error) {
+            console.error('Error al crear grupo:', error);
+            mostrarError('Error de conexión con el servidor.');
         }
-
-        //Guardar la información si pasa las validaciones (logica a cambiar en el futuro para conectar con el backend)
-        //Esto se deberia eliminar y solo guardar en el backend, pero se deja aquí para simular la creación de grupos y mostrarlo en la lista de grupos disponibles.
-        const nuevoGrupo = {
-            nombre: nombreValor,
-            descripcion: descripcionValor
-        };
-        baseDatosGrupos.push(nuevoGrupo);
-
-        // Actualizar la lista de grupos disponibles con el nuevo grupo creado
-        actualizarListaGrupos();
-
-        // Reseteo limpio del formulario
-        formCrearGrupo.reset();
     });
 });

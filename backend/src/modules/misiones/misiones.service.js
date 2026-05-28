@@ -4,8 +4,13 @@ import path from 'path';
 
 const misionesService = {};
 
-const rutaMisiones = path.resolve('./data/misiones.json');
-const rutaEjercicios = path.resolve('./data/ejercicios.json');
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const rutaMisiones = path.join(__dirname, '../../data/misiones.json');
+const rutaEjercicios = path.join(__dirname, '../../data/ejercicios.json');
 
 misionesService.obtenerMisiones = () => {
     return JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));

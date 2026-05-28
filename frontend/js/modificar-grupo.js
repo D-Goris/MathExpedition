@@ -1,73 +1,82 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // // Elementos del html (variables a modificar)
+    // Elementos del html (variables a modificar)
     const selectGrupo = document.getElementById('select-grupo-edicion');
     const contenedorLista = document.getElementById('lista-alumnos-grupo');
 
-    //Elementos de la base de datos simulada (variables a modificar)
-    const gruposDB = [
-        { idKey: "grado3a", nombre: "3er Grado A" },
-        { idKey: "grado3b", nombre: "3er Grado B" }
-    ];
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
+        ? 'http://localhost:3000/api'
+        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
 
-    let asignacionesDB = [
-        { idAlumno: 1, nombre: "Carlos Mendoza", usuario: "ExploradorMate", grupoKey: "grado3a" },
-        { idAlumno: 2, nombre: "Sofía Rodríguez", usuario: "MathWizard", grupoKey: "grado3b" },
-        { idAlumno: 4, nombre: "Ana Martínez", usuario: "DeltaMath", grupoKey: "grado3a" }
-    ];
+    let gruposDB = [];
+    let estudiantesDB = [];
 
-    //Funcion que carga los grupos disponibles en el menú desplegable.
-    function cargarGruposMockup() {
+    // Función que carga los grupos y estudiantes de la API
+    async function inicializarDatos() {
+        try {
+            const [resGrupos, resEstudiantes] = await Promise.all([
+                fetch(`${API_BASE}/grupos`),
+                fetch(`${API_BASE}/estudiantes`)
+            ]);
+            gruposDB = await resGrupos.json();
+            estudiantesDB = await resEstudiantes.json();
+
+            cargarGruposMenu();
+        } catch (error) {
+            console.error('Error cargando datos:', error);
+            selectGrupo.innerHTML = '<option value="">Error cargando grupos</option>';
+        }
+    }
+
+    // Funcion que carga los grupos disponibles en el menú desplegable.
+    function cargarGruposMenu() {
+        selectGrupo.innerHTML = '<option value="" disabled selected>-- Elige un grupo --</option>';
         if (gruposDB.length === 0) {
             selectGrupo.innerHTML = '<option value="">No hay grupos disponibles</option>';
             return;
         }
         gruposDB.forEach(grupo => {
             const nuevaOpcion = document.createElement('option');
-            nuevaOpcion.value = grupo.idKey;
+            nuevaOpcion.value = grupo.idGrupo;
             nuevaOpcion.textContent = grupo.nombre;
             selectGrupo.appendChild(nuevaOpcion);
         });
     }
 
-    // Inicializar el menú desplegable de salones
-    cargarGruposMockup();
+    inicializarDatos();
     
     // Función que lee el grupo seleccionado y renderiza a sus integrantes
-    function renderizarIntegrantes(grupoKey) {
-        if (!grupoKey){
+    function renderizarIntegrantes(idGrupo) {
+        if (!idGrupo){
             contenedorLista.innerHTML = '<p class="lista-vacia">📭 Por favor, selecciona un grupo para ver sus estudiantes.</p>';
             return;
         }
 
         // Filtrar los alumnos que corresponden a este salón
-        const alumnosDelGrupo = asignacionesDB.filter(item => item.grupoKey === grupoKey);
+        const alumnosDelGrupo = estudiantesDB.filter(est => est.grupoKey === idGrupo);
 
         contenedorLista.innerHTML = ''; // Limpiar contenedor
 
-        //El grupo existe pero no tiene ningún alumno asignado aún
         if (alumnosDelGrupo.length === 0) {
             contenedorLista.innerHTML = '<p class="lista-vacia">📭 Este grupo no tiene estudiantes inscritos actualmente.</p>';
             return;
         }
 
-        // EL grupo existe y tiene alumnos asignados, por lo que se renderizan normalmente.
         alumnosDelGrupo.forEach(alumno => {
             const divFila = document.createElement('div');
             divFila.className = 'fila-alumno-grupo';
 
             divFila.innerHTML = `
                 <div class="info-estudiante">
-                    <h4>👦 ${alumno.nombre}</h4>
-                    <span>Usuario: ${alumno.usuario}</span>
+                    <h4>👦 ${alumno.nombreCompleto}</h4>
+                    <span>Usuario: ${alumno.name}</span>
                 </div>
-                <button type="button" class="btn-remover" data-id="${alumno.idAlumno}">Remover</button>
+                <button type="button" class="btn-remover" data-id="${alumno.idUsuario}">Remover</button>
             `;
 
             contenedorLista.appendChild(divFila);
         });
 
-        // Asignar listeners a los nuevos botones de remover inyectados
-        asignarEventosBotones(grupoKey);
+        asignarEventosBotones(idGrupo);
     }
 
     // Escucha el cambio de grupo en el menú desplegable
@@ -75,27 +84,44 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarIntegrantes(e.target.value);
     });
 
-    // Añade la funcionalidad de borrado lógico a los botones
-    function asignarEventosBotones(grupoKey) {
+    // Añade la funcionalidad de borrado
+    function asignarEventosBotones(idGrupo) {
         const botonesRemover = document.querySelectorAll('.btn-remover');
         
         botonesRemover.forEach(boton => {
-            boton.addEventListener('click', (e) => {
-                const idParaQuitar = parseInt(e.target.getAttribute('data-id'));
+            boton.addEventListener('click', async (e) => {
+                const idAlumno = e.target.getAttribute('data-id');
                 
-                //Todo este codigo se tiene que eliminar cuando se integre con la base de datos real, ya que el backend se encargará de hacer la modificación y devolver el resultado actualizado.
-                // Encontrar el nombre del estudiante para personalizar la alerta
-                const alumnoObjetivo = asignacionesDB.find(item => item.idAlumno === idParaQuitar);    
-                // ACCIÓN: Modificamos el registro de la BD simulada (Saca al alumno del grupo)
-                asignacionesDB = asignacionesDB.filter(item => item.idAlumno !== idParaQuitar);
-                // Mensaje de éxito del sistema
-                alert(`¡Modificación exitosa!\nEl alumno fue removido del salón.`);
-                    
+                try {
+                    const originalText = e.target.textContent;
+                    e.target.textContent = 'Removiendo...';
+                    e.target.disabled = true;
 
-                
-                // Refrescar la pantalla inmediatamente con los datos actualizados
-                renderizarIntegrantes(grupoKey);
+                    const res = await fetch(`${API_BASE}/grupos/${idGrupo}/remover-alumno`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ idAlumno })
+                    });
+                    const data = await res.json();
 
+                    if (data.success) {
+                        alert(`¡Modificación exitosa!\nEl alumno fue removido del salón.`);
+                        // Refrescar los datos de la API para mostrar los cambios reales
+                        await inicializarDatos();
+                        // Dejar el select como estaba y re-renderizar
+                        selectGrupo.value = idGrupo;
+                        renderizarIntegrantes(idGrupo);
+                    } else {
+                        alert(`Error: ${data.message}`);
+                        e.target.textContent = originalText;
+                        e.target.disabled = false;
+                    }
+                } catch (error) {
+                    console.error('Error al remover alumno:', error);
+                    alert('Error de conexión con el servidor.');
+                    e.target.textContent = 'Remover';
+                    e.target.disabled = false;
+                }
             });
         });
     }
