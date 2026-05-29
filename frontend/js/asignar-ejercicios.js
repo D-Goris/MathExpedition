@@ -63,21 +63,33 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarMisiones();
     cargarGrupos();
 
+    const mensajeExito = document.getElementById('mensaje-exito');
+
     //funciones para mostrar mensajes de error en la interfaz
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
+        if (mensajeExito) mensajeExito.style.display = 'none';
+    }
+
+    function mostrarExito(mensaje) {
+        if (mensajeExito) {
+            mensajeExito.textContent = mensaje;
+            mensajeExito.style.display = 'block';
+        }
+        contenedorError.style.display = 'none';
     }
 
     //funcion para ocultar el mensaje de error
-    function ocultarError() {
+    function ocultarMensajes() {
         contenedorError.style.display = 'none';
+        if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
     //funcion para manejar el evento de envío del formulario.
     formAsignar.addEventListener('submit', async (evento) => {
         evento.preventDefault();
-        ocultarError();
+        ocultarMensajes();
 
         const idMision = selectEjercicios.value;
         const idGrupo = selectEstudiantes.value;
@@ -115,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 const nombreMision = selectEjercicios.options[selectEjercicios.selectedIndex].text;
                 const nombreSalon = selectEstudiantes.options[selectEstudiantes.selectedIndex].text;
-                alert(`¡Misión asignada con éxito!\nLos alumnos pertenecientes a "${nombreSalon}" ahora tienen disponible para resolver el paquete de retos: "${nombreMision}".`);
+                mostrarExito(`¡Misión asignada con éxito! Los alumnos de "${nombreSalon}" ahora tienen disponible "${nombreMision}".`);
                 formAsignar.reset();
             } else {
                 mostrarError(`Error al asignar: ${data.message}`);

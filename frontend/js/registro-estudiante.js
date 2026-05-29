@@ -7,22 +7,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputPassword = document.getElementById('password');
     const contenedorError = document.getElementById('contenedor-error');
     const textoError = document.getElementById('texto-error');
+    const mensajeExito = document.getElementById('mensaje-exito');
 
-    // Función para mostrar el contenedor de error (Mensaje de error)
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
+        if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
-    // Función para ocultar el contenedor de error (Mensaje de error)
-    function ocultarError() {
+    function mostrarExito(mensaje) {
+        if (mensajeExito) {
+            mensajeExito.textContent = mensaje;
+            mensajeExito.style.display = 'block';
+        }
         contenedorError.style.display = 'none';
+    }
+
+    function ocultarMensajes() {
+        contenedorError.style.display = 'none';
+        if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
     // Procesa el envío del formulario
     formEstudiante.addEventListener('submit', (evento) => {
         evento.preventDefault();
-        ocultarError();
+        ocultarMensajes();
         const nombreReal = inputNombreReal.value.trim();
         const perfil = inputPerfil.value.trim();
         const password = inputPassword.value;
@@ -74,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if (data.success) {
-                //alert('¡Explorador registrado con éxito!'); //Comento esto por tema de presentación, pero se puede descomentar para mostrar un mensaje de éxito.
+                mostrarExito('¡Explorador registrado con éxito!');
                 formEstudiante.reset();
             } else {
                 mostrarError(data.message || 'Error al registrar.');

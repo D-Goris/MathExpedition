@@ -31,6 +31,27 @@ misionesService.obtenerEjerciciosPorMision = (idMision) => {
     return ejerciciosDeLaMision;
 };
 
+misionesService.crearMision = (nombreMision) => {
+    const misiones = JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));
+    
+    if (misiones.find(m => m.nombre.toLowerCase() === nombreMision.toLowerCase())) {
+        return { error: 'Ya existe una misión con ese nombre' };
+    }
+
+    const nuevoId = misiones.length > 0 ? Math.max(...misiones.map(m => m.idMision)) + 1 : 1;
+
+    const nuevaMision = {
+        idMision: nuevoId,
+        nombre: nombreMision,
+        ejerciciosIds: []
+    };
+
+    misiones.push(nuevaMision);
+    fs.writeFileSync(rutaMisiones, JSON.stringify(misiones, null, 2), 'utf-8');
+
+    return nuevaMision;
+};
+
 misionesService.crearEjercicioEInyectar = (idMision, datosEjercicio) => {
     // 1. Validar que la misión exista
     const misiones = JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));

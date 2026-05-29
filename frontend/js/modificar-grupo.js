@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Función que lee el grupo seleccionado y renderiza a sus integrantes
     function renderizarIntegrantes(idGrupo) {
+        ocultarMensajes();
         if (!idGrupo){
             contenedorLista.innerHTML = '<p class="lista-vacia">📭 Por favor, selecciona un grupo para ver sus estudiantes.</p>';
             return;
@@ -79,6 +80,30 @@ document.addEventListener('DOMContentLoaded', () => {
         asignarEventosBotones(idGrupo);
     }
 
+    const mensajeExito = document.getElementById('mensaje-exito');
+    const mensajeError = document.getElementById('mensaje-error');
+
+    function mostrarExito(msj) {
+        if (mensajeExito) {
+            mensajeExito.textContent = msj;
+            mensajeExito.style.display = 'block';
+        }
+        if (mensajeError) mensajeError.style.display = 'none';
+    }
+
+    function mostrarError(msj) {
+        if (mensajeError) {
+            mensajeError.textContent = msj;
+            mensajeError.style.display = 'block';
+        }
+        if (mensajeExito) mensajeExito.style.display = 'none';
+    }
+
+    function ocultarMensajes() {
+        if (mensajeExito) mensajeExito.style.display = 'none';
+        if (mensajeError) mensajeError.style.display = 'none';
+    }
+
     // Escucha el cambio de grupo en el menú desplegable
     selectGrupo.addEventListener('change', (e) => {
         renderizarIntegrantes(e.target.value);
@@ -93,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const idAlumno = e.target.getAttribute('data-id');
                 
                 try {
+                    ocultarMensajes();
                     const originalText = e.target.textContent;
                     e.target.textContent = 'Removiendo...';
                     e.target.disabled = true;
@@ -105,20 +131,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await res.json();
 
                     if (data.success) {
-                        alert(`¡Modificación exitosa!\nEl alumno fue removido del salón.`);
+                        mostrarExito(`¡El alumno fue removido del salón!`);
                         // Refrescar los datos de la API para mostrar los cambios reales
                         await inicializarDatos();
                         // Dejar el select como estaba y re-renderizar
                         selectGrupo.value = idGrupo;
                         renderizarIntegrantes(idGrupo);
+                        // Mostrar mensaje otra vez porque renderizarIntegrantes lo oculta
+                        mostrarExito(`¡El alumno fue removido del salón!`);
                     } else {
-                        alert(`Error: ${data.message}`);
+                        mostrarError(`Error: ${data.message}`);
                         e.target.textContent = originalText;
                         e.target.disabled = false;
                     }
                 } catch (error) {
                     console.error('Error al remover alumno:', error);
-                    alert('Error de conexión con el servidor.');
+                    mostrarError('Error de conexión con el servidor.');
                     e.target.textContent = 'Remover';
                     e.target.disabled = false;
                 }

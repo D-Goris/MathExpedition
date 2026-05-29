@@ -1,38 +1,74 @@
 [
-  {
-    "id": 501,
-    "enunciado": "En una expedición por la selva geométrica, encuentras un cofre ancestral cerrado con un candado rúnico. Si la inscripción dice que el perímetro de un escudo perfectamente triangular equilátero mide 24 cm, ¿cuánto mide cada uno de sus lados?",
-    "opciones": {
-      "A": "6 cm",
-      "B": "8 cm",
-      "C": "12 cm",
-      "D": "10 cm"
+    {
+        "id": 501,
+        "enunciado": "En una expedición por la selva geométrica, encuentras un cofre ancestral cerrado con un candado rúnico. Si la inscripción dice que el perímetro de un escudo perfectamente triangular equilátero mide 24 cm, ¿cuánto mide cada uno de sus lados?",
+        "opciones": {
+            "A": "6 cm",
+            "B": "8 cm",
+            "C": "12 cm",
+            "D": "10 cm"
+        },
+        "respuestaCorrecta": "B",
+        "temaId": "geometria"
     },
-    "respuestaCorrecta": "B",
-    "temaId": "geometria"
-  },
-  {
-    "id": 502,
-    "enunciado": "Para cruzar el puente del infinito aritmético, el guardián te pide resolver la siguiente ecuación rúnica: 3x - 7 = 14. ¿Cuál es el valor de x?",
-    "opciones": {
-      "A": "5",
-      "B": "6",
-      "C": "7",
-      "D": "8"
+    {
+        "id": 502,
+        "enunciado": "Para cruzar el puente del infinito aritmético, el guardián te pide resolver la siguiente ecuación rúnica: 3x - 7 = 14. ¿Cuál es el valor de x?",
+        "opciones": {
+            "A": "5",
+            "B": "6",
+            "C": "7",
+            "D": "8"
+        },
+        "respuestaCorrecta": "C",
+        "temaId": "algebra"
     },
-    "respuestaCorrecta": "C",
-    "temaId": "algebra"
-  },
-  {
-    "id": 503,
-    "enunciado": "Si un cuadrado perfecto tiene un área de 16 cm2, ¿cuánto mide su lado?",
-    "opciones": {
-      "A": "2 cm",
-      "B": "4 cm",
-      "C": "8 cm",
-      "D": "16 cm"
+    {
+        "id": 503,
+        "enunciado": "Si un cuadrado perfecto tiene un área de 16 cm2, ¿cuánto mide su lado?",
+        "opciones": {
+            "A": "2 cm",
+            "B": "4 cm",
+            "C": "8 cm",
+            "D": "16 cm"
+        },
+        "respuestaCorrecta": "B",
+        "temaId": "1"
     },
-    "respuestaCorrecta": "B",
-    "temaId": "1"
-  }
+    {
+        "id": 504,
+        "enunciado": "123",
+        "opciones": {
+            "A": "1",
+            "B": "3",
+            "C": "4",
+            "D": "5"
+        },
+        "respuestaCorrecta": "B",
+        "temaId": "1"
+    },
+    {
+        "id": 505,
+        "enunciado": "asd",
+        "opciones": {
+            "A": "1",
+            "B": "2",
+            "C": "3",
+            "D": "4"
+        },
+        "respuestaCorrecta": "B",
+        "temaId": "2"
+    },
+    {
+        "id": 506,
+        "enunciado": "quien es más tonto",
+        "opciones": {
+            "A": "yo",
+            "B": "tu",
+            "C": "el de atras",
+            "D": "un comunicador"
+        },
+        "respuestaCorrecta": "D",
+        "temaId": "1"
+    }
 ]

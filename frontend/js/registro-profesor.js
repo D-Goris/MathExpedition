@@ -8,23 +8,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputConfirmPassword = document.getElementById('confirm-password');
     const contenedorError = document.getElementById('contenedor-error');
     const textoError = document.getElementById('texto-error');
+    const mensajeExito = document.getElementById('mensaje-exito');
     
-    //Funciones para mostrar el mensaje de errores
     function mostrarError(mensaje) {
         textoError.textContent = mensaje;
         contenedorError.style.display = 'block';
+        if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
-    //Función para ocultar el mensaje de error
-    function ocultarError() {
+    function mostrarExito(mensaje) {
+        if (mensajeExito) {
+            mensajeExito.textContent = mensaje;
+            mensajeExito.style.display = 'block';
+        }
         contenedorError.style.display = 'none';
+    }
+
+    function ocultarMensajes() {
+        contenedorError.style.display = 'none';
+        if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
     //procesa el envio del formulario
     formRegistro.addEventListener('submit', (evento) => {
         evento.preventDefault(); 
 
-        ocultarError();
+        ocultarMensajes();
 
         const nombre = inputNombre.value.trim();
         const correo = inputCorreo.value.trim();
@@ -86,8 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             if (data.success) {
-                //alert('¡Profesor registrado exitosamente! Ahora puedes iniciar sesión.'); //Comento esto por tema de presentación, pero se puede descomentar para mostrar un mensaje de éxito.
-                window.location.href = 'login.html'; 
+                mostrarExito('¡Profesor registrado exitosamente! Redirigiendo al inicio de sesión...');
+                setTimeout(() => {
+                    window.location.href = 'login.html'; 
+                }, 2000);
             } else {
                 mostrarError(data.message || 'Error al registrar.');
             }

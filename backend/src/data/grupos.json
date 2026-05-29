@@ -1,16 +1,44 @@
 [
-  {
-    "idGrupo": "grado3a",
-    "nombre": "3er Grado A",
-    "descripcion": "Clase matutina de matemáticas básicas.",
-    "estudiantesIds": [4, 7],
-    "misionesIds": ["mision-sumas"]
-  },
-  {
-    "idGrupo": "grado3b",
-    "nombre": "3er Grado B",
-    "descripcion": "Salón avanzado para resolución de problemas de lógica.",
-    "estudiantesIds": [5],
-    "misionesIds": ["mision-formas"]
-  }
+    {
+        "idGrupo": "grado3a",
+        "nombre": "3er Grado A",
+        "descripcion": "Clase matutina de matemáticas básicas.",
+        "estudiantesIds": [
+            4,
+            7,
+            "est-001",
+            "est-004"
+        ],
+        "misionesIds": [
+            "mision-sumas",
+            1
+        ]
+    },
+    {
+        "idGrupo": "grado3b",
+        "nombre": "3er Grado B",
+        "descripcion": "Salón avanzado para resolución de problemas de lógica.",
+        "estudiantesIds": [
+            5
+        ],
+        "misionesIds": [
+            "mision-formas"
+        ]
+    },
+    {
+        "idGrupo": "grupo-1779998182434",
+        "nombre": "1",
+        "descripcion": "1234",
+        "estudiantesIds": [],
+        "misionesIds": [
+            1
+        ]
+    },
+    {
+        "idGrupo": "grupo-1780000327610",
+        "nombre": "d",
+        "descripcion": "sdd",
+        "estudiantesIds": [],
+        "misionesIds": []
+    }
 ]

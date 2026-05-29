@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             estudiantesCargados = await res.json();
 
             selectEstudiante.innerHTML = '<option value="" disabled selected>-- Elige un explorador --</option>';
-
             if (estudiantesCargados.length === 0) {
                 selectEstudiante.innerHTML = '<option value="" disabled selected>No hay estudiantes registrados.</option>';
                 return;

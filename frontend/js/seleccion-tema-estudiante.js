@@ -2,10 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //elementos del html a manipular
     const temasContainer = document.getElementById('temas-container');
-    const menuBarra = document.querySelector('.menu-barra');
-    const panelLateral = document.getElementById('panel-lateral');
     const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
-    const btnCerrarPanel = document.getElementById('btn-cerrar-panel');
 
     const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
         ? 'http://localhost:3000/api'
@@ -30,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!dataAsignadas.success || !dataAsignadas.misionesIds || dataAsignadas.misionesIds.length === 0) {
                 temasContainer.innerHTML = `
-                    <div style="text-align: center; color: white; padding: 2rem;">
+                    <div style="text-align: center; color: black; padding: 2rem;">
                         <h3>📭 Aún no tienes misiones asignadas</h3>
-                        <p>Tu grupo (${dataAsignadas.grupo || 'Ninguno'}) no tiene misiones activas por ahora. ¡Pregúntale a tu maestro!</p>
+                        <p> No tiene misiones activas por ahora. ¡Pregúntale a tu maestro!</p>
                     </div>
                 `;
                 return;
@@ -68,13 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             tarjeta.classList.add('tema-card');
             tarjeta.setAttribute('data-tema', mision.idMision);
             tarjeta.innerHTML = `<h3>Misión: ${mision.nombre}</h3>`;
-            
+
             tarjeta.addEventListener('click', () => {
                 const temaSeleccionado = tarjeta.getAttribute('data-tema');
                 // Redirigir a realizar ejercicio pasando el ID de la misión en la URL
                 window.location.href = `realizar-ejercicio.html?mision=${temaSeleccionado}`;
             });
-            
+
             temasContainer.appendChild(tarjeta);
         });
     }
@@ -86,6 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnCerrarSesion.addEventListener('click', () => {
         localStorage.removeItem('usuarioLogueado');
         localStorage.removeItem('rolUsuario');
-        window.location.href = 'login.html'; 
+        window.location.href = 'login.html';
     });
 });

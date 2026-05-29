@@ -13,16 +13,11 @@ const estudiantesService = {};
 estudiantesService.obtenerEstudiantes = () => {
     const estudiantes = JSON.parse(fs.readFileSync(rutaEstudiantes, 'utf-8'));
     const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
-
-    // Remove passwords before sending, and optionally attach their group
     return estudiantes.map(est => {
         const estSeguro = {
             idUsuario: est._idUsuario || est.idUsuario,
             name: est.name,
             nombreCompleto: est.nombreCompleto,
-            grado: est.grado,
-            edad: est.edad,
-            nivel: est.nivel,
             ejerciciosResueltos: est.ejerciciosResueltos,
             registrosAvance: est.registrosAvance
         };

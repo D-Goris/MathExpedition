@@ -1,59 +1,80 @@
 [
-  {
-    "_idUsuario": "est-001",
-    "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
-    "name": "PedroMagoMat",
-    "grado": 3,
-    "edad": 9,
-    "nivel": 1,
-    "nombreCompleto": "Pedro Al explorar",
-    "ejerciciosResueltos": [
-      501
-    ],
-    "registrosAvance": []
-  },
-  {
-    "_idUsuario": "est-002",
-    "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
-    "name": "SofiSapiens",
-    "grado": 3,
-    "edad": 9,
-    "nivel": 1,
-    "nombreCompleto": "Sofía Calculadora",
-    "ejerciciosResueltos": [],
-    "registrosAvance": []
-  },
-  {
-    "_idUsuario": "est-003",
-    "password": "$2a$10$wKnqm.k2pOQN4hauspHn8ORERBvRm/Wax7kKkKv936XIC31.9xjYS",
-    "name": "TheGOAT",
-    "grado": 3,
-    "edad": 9,
-    "nivel": 1,
-    "nombreCompleto": "Rafael Guacaran",
-    "ejerciciosResueltos": [],
-    "registrosAvance": []
-  },
-  {
-    "_idUsuario": "est-004",
-    "password": "$2b$10$CPV18IUuGtfCVdD5lMdO0O1NWpitWERQka6d6hNkBGyoZoxnywM56",
-    "name": "Rodrigo",
-    "grado": 3,
-    "edad": 9,
-    "nivel": 1,
-    "nombreCompleto": "Rodrigo Moraurt",
-    "ejerciciosResueltos": [],
-    "registrosAvance": []
-  },
-  {
-    "_idUsuario": "est-005",
-    "password": "$2b$10$7sqqcTfKiDx39SUZXgDxQuMXENFX5I7uTjqhK/2KWfLYVn2o1y2qC",
-    "name": "samuel",
-    "grado": 3,
-    "edad": 9,
-    "nivel": 1,
-    "nombreCompleto": "Samuel Mundaray",
-    "ejerciciosResueltos": [],
-    "registrosAvance": []
-  }
+    {
+        "_idUsuario": "est-001",
+        "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
+        "name": "PedroMagoMat",
+        "nombreCompleto": "Pedro Al explorar",
+        "ejerciciosResueltos": [
+            501
+        ],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-002",
+        "password": "$2a$10$FWOp1LyB9U6WBh84a94Zm.Qs9EUNcMSiQhrunJ8nnsBpw6/U5Yf7e",
+        "name": "SofiSapiens",
+        "nombreCompleto": "Sofía Calculadora",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-003",
+        "password": "$2a$10$wKnqm.k2pOQN4hauspHn8ORERBvRm/Wax7kKkKv936XIC31.9xjYS",
+        "name": "TheGOAT",
+        "nombreCompleto": "Rafael Guacaran",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-004",
+        "password": "$2b$10$CPV18IUuGtfCVdD5lMdO0O1NWpitWERQka6d6hNkBGyoZoxnywM56",
+        "name": "Rodrigo",
+        "nombreCompleto": "Rodrigo Moraurt",
+        "ejerciciosResueltos": [
+            503,
+            506,
+            502
+        ],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-005",
+        "password": "$2b$10$7sqqcTfKiDx39SUZXgDxQuMXENFX5I7uTjqhK/2KWfLYVn2o1y2qC",
+        "name": "samuel",
+        "nombreCompleto": "Samuel Mundaray",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-006",
+        "password": "$2b$10$HVo3wGD0kr7vmwLo6EXCcuKswwiZ/MQ8C.C1m2b.EzOX8x0.Vvuea",
+        "name": "pepe",
+        "nombreCompleto": "mariano",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-007",
+        "password": "$2b$10$IUnIltdXV4iSQiid9nqTt.k6eEx.oQBu5tjzMwAX8CHrhn27qaT6m",
+        "name": "234568790",
+        "nombreCompleto": "234568790",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-008",
+        "password": "$2b$10$vsRqinID4q199veROKztrOBNeHw4hKCaEfvATDYKpLJyA2rkXhHn6",
+        "name": "asd",
+        "nombreCompleto": "a",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    },
+    {
+        "_idUsuario": "est-009",
+        "password": "$2b$10$I7vTGWd5mWa.VzvwbJLyO.Qg7NdRFYPswayZDQBbI9UVh.evz18e6",
+        "name": "123",
+        "nombreCompleto": "123",
+        "ejerciciosResueltos": [],
+        "registrosAvance": []
+    }
 ]

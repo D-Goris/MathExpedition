@@ -81,9 +81,6 @@ authService.registrarEstudiante = (datosEstudiante) => {
         _idUsuario: nuevoId,
         password: passwordEncriptada,
         name: nombrePerfil,
-        grado: 3,         // Valores por defecto para empezar a jugar
-        edad: 9,
-        nivel: 1,
         nombreCompleto: nombreCompleto,
         ejerciciosResueltos: [],
         registrosAvance: []

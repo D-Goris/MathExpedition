@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bloqueResultado = document.getElementById('bloque-resultado');
     const mensajeResultado = document.getElementById('mensaje-resultado');
     const btnSiguiente = document.getElementById('btn-siguiente-pregunta');
-    const contenedorPrincipal = document.querySelector('.contenedor-ejercicio');
+    const contenedorPrincipal = document.querySelector('main');
 
     const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
         ? 'http://localhost:3000/api'
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let preguntaActualIndex = 0;
     let preguntasDB = [];
     let idMision = new URLSearchParams(window.location.search).get('mision');
-    
+
     const usuarioRaw = localStorage.getItem('usuarioLogueado');
     if (!usuarioRaw) {
         window.location.href = 'login.html';
@@ -60,14 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carga la pregunta actual limpiando estados antiguos
     function cargarPregunta() {
         const pregunta = preguntasDB[preguntaActualIndex];
-        
+
         textoEnunciado.textContent = pregunta.enunciado;
         // Los ejercicios en el backend tienen opciones.A, opciones.B, etc.
         textoA.textContent = pregunta.opciones ? pregunta.opciones.A : pregunta.opcionA;
         textoB.textContent = pregunta.opciones ? pregunta.opciones.B : pregunta.opcionB;
         textoC.textContent = pregunta.opciones ? pregunta.opciones.C : pregunta.opcionC;
         textoD.textContent = pregunta.opciones ? pregunta.opciones.D : pregunta.opcionD;
-        
+
         opcionSeleccionada = null;
         bloqueOpciones.classList.remove('bloqueado');
         bloqueResultado.classList.add('oculto');
@@ -139,9 +139,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (preguntaActualIndex < preguntasDB.length) {
             cargarPregunta();
         } else {
-            // Si ya no hay más preguntas, la lección terminó y vuelve al mapa
-            alert('¡Has completado todos los ejercicios de esta misión!');
-            window.location.href = 'seleccion-tema-estudiante.html';
+            // Si ya no hay más preguntas, muestra mensaje de victoria y un botón para volver
+            contenedorPrincipal.innerHTML = `
+                <div style="text-align: center; color: black; padding: 3rem;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">🎉 ¡Misión Completada!</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Has completado todos los ejercicios de esta misión con éxito explorador.</p>
+                    <button id="btn-volver-final" class="btn-siguiente" style="font-size: 1.2rem; padding: 15px 30px;">Volver al Mapa</button>
+                </div>
+            `;
+            document.getElementById('btn-volver-final').addEventListener('click', () => {
+                window.location.href = 'seleccion-tema-estudiante.html';
+            });
         }
     });
 

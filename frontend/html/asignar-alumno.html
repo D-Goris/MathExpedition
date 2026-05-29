@@ -15,10 +15,10 @@
             <p>Vincula a tus estudiantes registrados con su respectivo grupo escolar.</p>
         </header>
 
-        <form id="form-assignar-alumno" novalidate>
+        <form id="form-asignar" novalidate>
             <section>
-                <label for="select-alumno">Selecciona al Estudiante</label>
-                <select id="select-alumno" required>
+                <label for="select-estudiante">Selecciona al Estudiante</label>
+                <select id="select-estudiante" required>
                     <option value="" disabled selected>Elige un estudiante...</option>
                 </select>
             </section>
@@ -30,9 +30,11 @@
                 </select>
             </section>
 
-            <section id="contenedor-error">
+            <section id="contenedor-error" style="display: none;">
                 <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
             </section>
+
+            <p id="mensaje-exito" style="display: none; color: #16a34a; text-align: center; font-weight: bold; margin-bottom: 1rem;"></p>
 
             <button type="submit" id="btn-confirmar-asignacion">Confirmar Asignación</button>
         </form>

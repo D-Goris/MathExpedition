@@ -20,6 +20,25 @@ misionesController.obtenerEjerciciosPorMision = (req, res) => {
     return res.status(200).json(ejercicios);
 };
 
+misionesController.crearMision = (req, res) => {
+    const { nombre } = req.body;
+
+    if (!nombre) {
+        return res.status(400).json({ msg: 'Se requiere el nombre de la misión' });
+    }
+
+    const resultado = misionesService.crearMision(nombre);
+
+    if (resultado.error) {
+        return res.status(400).json({ msg: resultado.error });
+    }
+
+    return res.status(201).json({
+        msg: 'Misión creada exitosamente',
+        mision: resultado
+    });
+};
+
 misionesController.crearEjercicio = (req, res) => {
     const { id } = req.params; // Este es el ID de la misión desde la URL
     
