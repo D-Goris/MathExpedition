@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const dataPath = path.join(__dirname, '../../data');
+const dataPath = path.join(__dirname, '../data/');
 
 export const leerJSON = (archivo) => {
     const ruta = path.join(dataPath, archivo);
