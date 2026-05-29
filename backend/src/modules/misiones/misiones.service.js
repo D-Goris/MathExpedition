@@ -1,28 +1,17 @@
-// src/modules/misiones/misiones.service.js
-import fs from 'fs';
-import path from 'path';
+import * as repoMisiones from '../../repository/repository.misiones.js';
+import * as repoEjercicios from '../../repository/repository.ejercicios.js';
 
 const misionesService = {};
 
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const rutaMisiones = path.join(__dirname, '../../data/misiones.json');
-const rutaEjercicios = path.join(__dirname, '../../data/ejercicios.json');
-
 misionesService.obtenerMisiones = () => {
-    return JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));
+    return repoMisiones.obtenerTodos();
 };
 
 misionesService.obtenerEjerciciosPorMision = (idMision) => {
-    const misiones = JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));
-    
-    const misionEncontrada = misiones.find(m => m.idMision === Number(idMision));
+    const misionEncontrada = repoMisiones.obtenerPorId(idMision);
     if (!misionEncontrada) return null;
 
-    const todosLosEjercicios = JSON.parse(fs.readFileSync(rutaEjercicios, 'utf-8'));
+    const todosLosEjercicios = repoEjercicios.obtenerTodos();
 
     const ejerciciosDeLaMision = todosLosEjercicios.filter(ejercicio => 
         misionEncontrada.ejerciciosIds.includes(ejercicio.id)
@@ -32,7 +21,7 @@ misionesService.obtenerEjerciciosPorMision = (idMision) => {
 };
 
 misionesService.crearMision = (nombreMision) => {
-    const misiones = JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));
+    const misiones = repoMisiones.obtenerTodos();
     
     if (misiones.find(m => m.nombre.toLowerCase() === nombreMision.toLowerCase())) {
         return { error: 'Ya existe una misión con ese nombre' };
@@ -46,23 +35,21 @@ misionesService.crearMision = (nombreMision) => {
         ejerciciosIds: []
     };
 
-    misiones.push(nuevaMision);
-    fs.writeFileSync(rutaMisiones, JSON.stringify(misiones, null, 2), 'utf-8');
+    repoMisiones.agregarMision(nuevaMision);
 
     return nuevaMision;
 };
 
 misionesService.crearEjercicioEInyectar = (idMision, datosEjercicio) => {
     // 1. Validar que la misión exista
-    const misiones = JSON.parse(fs.readFileSync(rutaMisiones, 'utf-8'));
-    const misionEncontrada = misiones.find(m => m.idMision === Number(idMision));
+    const misionEncontrada = repoMisiones.obtenerPorId(idMision);
     
     if (!misionEncontrada) {
         return { error: 'La misión destino no existe' };
     }
 
     // 2. Leer los ejercicios actuales
-    const ejercicios = JSON.parse(fs.readFileSync(rutaEjercicios, 'utf-8'));
+    const ejercicios = repoEjercicios.obtenerTodos();
 
     // 3. Generar un nuevo ID dinámico (buscamos el ID más alto y le sumamos 1)
     const nuevoId = ejercicios.length > 0 ? Math.max(...ejercicios.map(e => e.id)) + 1 : 1;
@@ -82,12 +69,11 @@ misionesService.crearEjercicioEInyectar = (idMision, datosEjercicio) => {
     };
 
     // 5. Guardar el nuevo ejercicio en ejercicios.json
-    ejercicios.push(nuevoEjercicio);
-    fs.writeFileSync(rutaEjercicios, JSON.stringify(ejercicios, null, 2), 'utf-8');
+    repoEjercicios.agregarEjercicio(nuevoEjercicio);
 
     // 6. Inyectar el nuevo ID en el array 'ejerciciosIds' de la misión
     misionEncontrada.ejerciciosIds.push(nuevoId);
-    fs.writeFileSync(rutaMisiones, JSON.stringify(misiones, null, 2), 'utf-8');
+    repoMisiones.actualizarMision(idMision, { ejerciciosIds: misionEncontrada.ejerciciosIds });
 
     return nuevoEjercicio; // Devolvemos el ejercicio creado
 };

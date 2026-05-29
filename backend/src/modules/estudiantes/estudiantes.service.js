@@ -1,18 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const rutaEstudiantes = path.join(__dirname, '../../data/estudiantes.json');
-const rutaGrupos = path.join(__dirname, '../../data/grupos.json');
+import * as repoEstudiantes from '../../repository/repository.estudiantes.js';
+import * as repoGrupos from '../../repository/repository.grupos.js';
 
 const estudiantesService = {};
 
 estudiantesService.obtenerEstudiantes = () => {
-    const estudiantes = JSON.parse(fs.readFileSync(rutaEstudiantes, 'utf-8'));
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const estudiantes = repoEstudiantes.obtenerTodos();
+    const grupos = repoGrupos.obtenerTodos();
     return estudiantes.map(est => {
         const estSeguro = {
             idUsuario: est._idUsuario || est.idUsuario,
@@ -32,7 +25,7 @@ estudiantesService.obtenerEstudiantes = () => {
 };
 
 estudiantesService.obtenerMisionesAsignadas = (idEstudiante) => {
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const grupos = repoGrupos.obtenerTodos();
     const grupoAsignado = grupos.find(g => g.estudiantesIds && g.estudiantesIds.includes(idEstudiante));
 
     if (!grupoAsignado) {
@@ -43,8 +36,7 @@ estudiantesService.obtenerMisionesAsignadas = (idEstudiante) => {
 };
 
 estudiantesService.guardarAvance = (idEstudiante, idEjercicio) => {
-    const estudiantes = JSON.parse(fs.readFileSync(rutaEstudiantes, 'utf-8'));
-    const estudianteEncontrado = estudiantes.find(e => (e._idUsuario || e.idUsuario) === idEstudiante);
+    const estudianteEncontrado = repoEstudiantes.obtenerPorId(idEstudiante);
 
     if (!estudianteEncontrado) {
         return { error: 'Estudiante no encontrado' };
@@ -59,7 +51,7 @@ estudiantesService.guardarAvance = (idEstudiante, idEjercicio) => {
         estudianteEncontrado.ejerciciosResueltos.push(Number(idEjercicio));
     }
 
-    fs.writeFileSync(rutaEstudiantes, JSON.stringify(estudiantes, null, 2), 'utf-8');
+    repoEstudiantes.actualizarEstudiante(idEstudiante, { ejerciciosResueltos: estudianteEncontrado.ejerciciosResueltos });
     return estudianteEncontrado;
 };
 

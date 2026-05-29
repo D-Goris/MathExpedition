@@ -68,16 +68,55 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mensajeExito) mensajeExito.style.display = 'none';
     }
 
-    // Lógica visual para mostrar/ocultar el input de nuevo tema
-    selectTema.addEventListener('change', () => {
+    const listaEjerciciosMision = document.getElementById('lista-ejercicios-mision');
+    const estadoResumen = document.getElementById('estado-resumen');
+
+    // Lógica visual para mostrar/ocultar el input de nuevo tema y cargar resumen
+    selectTema.addEventListener('change', async () => {
         if (selectTema.value === 'nueva') {
             inputNuevoTema.style.display = 'block';
             inputNuevoTema.focus();
+            
+            estadoResumen.style.display = 'block';
+            estadoResumen.textContent = 'Misión nueva. Aún no hay ejercicios creados.';
+            listaEjerciciosMision.innerHTML = '';
         } else {
             inputNuevoTema.style.display = 'none';
             inputNuevoTema.value = '';
+            
+            await cargarResumenEjercicios(selectTema.value);
         }
     });
+
+    async function cargarResumenEjercicios(idMision) {
+        estadoResumen.style.display = 'block';
+        estadoResumen.textContent = 'Cargando ejercicios...';
+        listaEjerciciosMision.innerHTML = '';
+
+        try {
+            const res = await fetch(`${API_BASE}/misiones/${idMision}/ejercicios`);
+            if (!res.ok) throw new Error('Error al obtener ejercicios');
+            const ejercicios = await res.json();
+
+            if (ejercicios.length === 0) {
+                estadoResumen.textContent = 'Esta misión no tiene ejercicios aún.';
+            } else {
+                estadoResumen.style.display = 'none';
+                ejercicios.forEach((ejercicio, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'tarjeta-ejercicio-resumen';
+                    div.innerHTML = `
+                        <strong>Ejercicio ${index + 1}</strong>
+                        <p>${ejercicio.enunciado}</p>
+                    `;
+                    listaEjerciciosMision.appendChild(div);
+                });
+            }
+        } catch (error) {
+            console.error('Error al cargar resumen:', error);
+            estadoResumen.textContent = 'Error al cargar el resumen de ejercicios.';
+        }
+    }
 
     // Validación y envío del formulario
     formEjercicio.addEventListener('submit', async (evento) => {
@@ -159,7 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 mostrarExito('¡Ejercicio guardado exitosamente en la misión!');
                 formEjercicio.reset();
                 inputNuevoTema.style.display = 'none';
-                cargarTemas(); // Recargar los selectores para mostrar la nueva misión
+                await cargarTemas(); // Recargar los selectores para mostrar la nueva misión
+                
+                // Asegurar que la misión seleccionada sea la misma en la que se guardó
+                selectTema.value = temaFinal;
+                await cargarResumenEjercicios(temaFinal);
             } else {
                 mostrarError(`Error al guardar: ${data.msg || 'Desconocido'}`);
             }

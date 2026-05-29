@@ -1,14 +1,20 @@
 [
-    {
-        "idUsuario": "prof-001",
-        "password": "$2a$10$qxfRy9AYqHVsGk7nJ7i9WeDVUdpgzNBKIJv3cDme0MdmQtu6GBgTG",
-        "name": "Carlos Hipatía",
-        "email": "carlos.maestro@mathexpedition.edu"
-    },
-    {
-        "idUsuario": "prof-002",
-        "password": "$2b$10$w1msP7WIQfDzU.SW8n9cCOiL3Wgy6nIqMko.RF9oPZQZRF1BxeZRO",
-        "name": "Daniel Goris",
-        "email": "danielgoris@gmail.com"
-    }
+  {
+    "idUsuario": "prof-001",
+    "password": "$2a$10$qxfRy9AYqHVsGk7nJ7i9WeDVUdpgzNBKIJv3cDme0MdmQtu6GBgTG",
+    "name": "Carlos Hipatía",
+    "email": "carlos.maestro@mathexpedition.edu"
+  },
+  {
+    "idUsuario": "prof-002",
+    "password": "$2b$10$w1msP7WIQfDzU.SW8n9cCOiL3Wgy6nIqMko.RF9oPZQZRF1BxeZRO",
+    "name": "Daniel Goris",
+    "email": "danielgoris@gmail.com"
+  },
+  {
+    "idUsuario": "prof-003",
+    "password": "$2b$10$H4lf0xCerIoQwJl1Gxa/MOfqhdBeQbWlreB/e07F7kHf8w44D76Du",
+    "name": "pepe",
+    "email": "pepe@gmail.com"
+  }
 ]

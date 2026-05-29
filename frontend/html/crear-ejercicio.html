@@ -16,51 +16,59 @@
             <p>Diseña un ejercicio de selección simple para tus alumnos.</p>
         </header>
 
-        <form id="form-crear-ejercicio" novalidate>
-            
-            <section>
-                <label for="tema">Tema de la Expedición</label>
-                <select id="tema" name="tema" required>
-                    <option value="" disabled selected>Selecciona un tema...</option>
-                    </select>
+        <div class="layout-crear-ejercicio">
+            <form id="form-crear-ejercicio" novalidate>
                 
-                <input type="text" id="nuevo-tema" name="nuevo-tema" placeholder="Escribe el nombre del nuevo tema" style="display: none; margin-top: 10px;">
-            </section>
+                <section>
+                    <label for="tema">Tema de la Expedición (Misión)</label>
+                    <select id="tema" name="tema" required>
+                        <option value="" disabled selected>Selecciona un tema...</option>
+                        </select>
+                    
+                    <input type="text" id="nuevo-tema" name="nuevo-tema" placeholder="Escribe el nombre del nuevo tema" style="display: none; margin-top: 10px;">
+                </section>
 
-            <section>
-                <label for="pregunta">Planteamiento del Problema</label>
-                <textarea id="pregunta" name="pregunta" placeholder="Ej. Si Juan tiene 5 manzanas y compra 3 más, ¿cuántas tiene en total?" required></textarea>
-            </section>
+                <section>
+                    <label for="pregunta">Planteamiento del Problema</label>
+                    <textarea id="pregunta" name="pregunta" placeholder="Ej. Si Juan tiene 5 manzanas y compra 3 más, ¿cuántas tiene en total?" required></textarea>
+                </section>
 
-            <section>
-                <label>Opciones de Respuesta</label>
-                <div class="contenedor-opciones">
-                    <input type="text" id="opcion-a" placeholder="Opción A" required>
-                    <input type="text" id="opcion-b" placeholder="Opción B" required>
-                    <input type="text" id="opcion-c" placeholder="Opción C" required>
-                    <input type="text" id="opcion-d" placeholder="Opción D" required>
-                </div>
-            </section>
+                <section>
+                    <label>Opciones de Respuesta</label>
+                    <div class="contenedor-opciones">
+                        <input type="text" id="opcion-a" placeholder="Opción A" required>
+                        <input type="text" id="opcion-b" placeholder="Opción B" required>
+                        <input type="text" id="opcion-c" placeholder="Opción C" required>
+                        <input type="text" id="opcion-d" placeholder="Opción D" required>
+                    </div>
+                </section>
 
-            <section>
-                <label for="respuesta-correcta">¿Cuál es la respuesta correcta?</label>
-                <select id="respuesta-correcta" name="respuesta-correcta" required>
-                    <option value="" disabled selected>Indica la opción ganadora...</option>
-                    <option value="A">Opción A</option>
-                    <option value="B">Opción B</option>
-                    <option value="C">Opción C</option>
-                    <option value="D">Opción D</option>
-                </select>
-            </section>
+                <section>
+                    <label for="respuesta-correcta">¿Cuál es la respuesta correcta?</label>
+                    <select id="respuesta-correcta" name="respuesta-correcta" required>
+                        <option value="" disabled selected>Indica la opción ganadora...</option>
+                        <option value="A">Opción A</option>
+                        <option value="B">Opción B</option>
+                        <option value="C">Opción C</option>
+                        <option value="D">Opción D</option>
+                    </select>
+                </section>
 
-            <section id="contenedor-error" style="display: none;">
-                <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
-            </section>
+                <section id="contenedor-error" style="display: none;">
+                    <p id="texto-error">Aquí se mostrará el error correspondiente.</p>
+                </section>
 
-            <p id="mensaje-exito" style="display: none; color: #16a34a; text-align: center; font-weight: bold; margin-bottom: 1rem;"></p>
+                <p id="mensaje-exito" style="display: none; color: #16a34a; text-align: center; font-weight: bold; margin-bottom: 1rem;"></p>
 
-            <button type="submit" id="btn-guardar-ejercicio">Guardar Ejercicio</button>
-        </form>
+                <button type="submit" id="btn-guardar-ejercicio">Guardar Ejercicio</button>
+            </form>
+
+            <aside id="panel-resumen" class="panel-resumen">
+                <h3>Ejercicios en la Misión</h3>
+                <p id="estado-resumen" class="estado-resumen">Selecciona una misión para ver sus ejercicios.</p>
+                <div id="lista-ejercicios-mision" class="lista-ejercicios-mision"></div>
+            </aside>
+        </div>
 
         <footer>
             <p><a href="menu-profesor.html">Volver al Panel del Profesor</a></p>

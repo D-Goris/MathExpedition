@@ -1,0 +1,53 @@
+main {
+    max-width: 600px;
+    width: 95%;
+}
+
+.contenedor-perfil {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.tarjeta-perfil {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.icono-perfil {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-grupo {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid #f3f4f6;
+    padding-bottom: 1rem;
+}
+
+.info-grupo:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.info-grupo label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--color-texto-mutated);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dato-perfil {
+    font-size: 1.2rem;
+    color: var(--color-texto);
+    margin: 0;
+    font-weight: 500;
+}

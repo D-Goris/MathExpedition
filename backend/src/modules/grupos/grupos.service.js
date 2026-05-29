@@ -1,20 +1,13 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const rutaGrupos = path.join(__dirname, '../../data/grupos.json');
+import * as repoGrupos from '../../repository/repository.grupos.js';
 
 const gruposService = {};
 
 gruposService.obtenerGrupos = () => {
-    return JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    return repoGrupos.obtenerTodos();
 };
 
 gruposService.crearGrupo = (nombre, descripcion) => {
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const grupos = repoGrupos.obtenerTodos();
 
     if (grupos.find(g => g.nombre.toLowerCase() === nombre.toLowerCase())) {
         return { error: 'El grupo ya existe' };
@@ -30,14 +23,13 @@ gruposService.crearGrupo = (nombre, descripcion) => {
         misionesIds: []
     };
 
-    grupos.push(nuevoGrupo);
-    fs.writeFileSync(rutaGrupos, JSON.stringify(grupos, null, 2), 'utf-8');
+    repoGrupos.agregarGrupo(nuevoGrupo);
 
     return nuevoGrupo;
 };
 
 gruposService.asignarAlumno = (idGrupo, idAlumno) => {
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const grupos = repoGrupos.obtenerTodos();
     const grupo = grupos.find(g => g.idGrupo === idGrupo);
 
     if (!grupo) return { error: 'Grupo no encontrado' };
@@ -50,24 +42,24 @@ gruposService.asignarAlumno = (idGrupo, idAlumno) => {
     // Add to the new group
     grupo.estudiantesIds.push(idAlumno);
     
-    fs.writeFileSync(rutaGrupos, JSON.stringify(grupos, null, 2), 'utf-8');
+    repoGrupos.guardarTodos(grupos);
     return grupo;
 };
 
 gruposService.removerAlumno = (idGrupo, idAlumno) => {
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const grupos = repoGrupos.obtenerTodos();
     const grupo = grupos.find(g => g.idGrupo === idGrupo);
 
     if (!grupo) return { error: 'Grupo no encontrado' };
 
     grupo.estudiantesIds = grupo.estudiantesIds.filter(id => id !== idAlumno);
 
-    fs.writeFileSync(rutaGrupos, JSON.stringify(grupos, null, 2), 'utf-8');
+    repoGrupos.guardarTodos(grupos);
     return grupo;
 };
 
 gruposService.asignarMision = (idGrupo, idMision) => {
-    const grupos = JSON.parse(fs.readFileSync(rutaGrupos, 'utf-8'));
+    const grupos = repoGrupos.obtenerTodos();
     const grupo = grupos.find(g => g.idGrupo === idGrupo);
 
     if (!grupo) return { error: 'Grupo no encontrado' };
@@ -76,7 +68,7 @@ gruposService.asignarMision = (idGrupo, idMision) => {
         grupo.misionesIds.push(Number(idMision));
     }
 
-    fs.writeFileSync(rutaGrupos, JSON.stringify(grupos, null, 2), 'utf-8');
+    repoGrupos.guardarTodos(grupos);
     return grupo;
 };
 

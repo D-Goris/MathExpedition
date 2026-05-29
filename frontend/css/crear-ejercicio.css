@@ -1,5 +1,19 @@
-main{
-    max-width: 550px;
+main {
+    max-width: 900px; /* Aumentamos el ancho para acomodar el layout de dos columnas */
+    width: 95%;
+}
+
+.layout-crear-ejercicio {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .layout-crear-ejercicio {
+        grid-template-columns: 1fr;
+    }
 }
 
 .contenedor-opciones {
@@ -11,4 +25,60 @@ main{
 section textarea {
     resize: vertical;
     min-height: 90px;
+}
+
+.panel-resumen {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.panel-resumen h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: var(--color-texto);
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 10px;
+}
+
+.estado-resumen {
+    color: var(--color-texto-mutated);
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.lista-ejercicios-mision {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tarjeta-ejercicio-resumen {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 0.85rem;
+}
+
+.tarjeta-ejercicio-resumen strong {
+    color: var(--color-principal);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.tarjeta-ejercicio-resumen p {
+    margin: 0;
+    color: var(--color-texto);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }

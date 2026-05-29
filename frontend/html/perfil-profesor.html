@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathExpedition - Perfil del Profesor</title>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/perfil-profesor.css">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Math<span>Expedition</span></h1>
+            <h2>Mi Perfil de Profesor</h2>
+            <p>Consulta la información de tu cuenta.</p>
+        </header>
+
+        <section class="contenedor-perfil" id="contenedor-perfil" style="display: none;">
+            <div class="tarjeta-perfil">
+                <div class="icono-perfil">👨‍🏫</div>
+                <div class="info-grupo">
+                    <label>Nombre Completo:</label>
+                    <p id="perfil-nombre" class="dato-perfil">-</p>
+                </div>
+                <div class="info-grupo">
+                    <label>Correo Electrónico:</label>
+                    <p id="perfil-correo" class="dato-perfil">-</p>
+                </div>
+                <div class="info-grupo">
+                    <label>ID de Usuario:</label>
+                    <p id="perfil-id" class="dato-perfil" style="font-family: monospace; color: var(--color-texto-mutated);">-</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contenedor-error" style="display: none; margin-top: 2rem;">
+            <p id="texto-error" style="color: #dc2626; text-align: center; font-weight: bold; background: #fee2e2; padding: 10px; border-radius: 8px;">Aquí se mostrará el error correspondiente.</p>
+        </section>
+
+        <section id="contenedor-carga" style="text-align: center; padding: 3rem;">
+            <p>Cargando información del perfil...</p>
+        </section>
+
+        <footer>
+            <p><a href="menu-profesor.html">Volver al Panel del Profesor</a></p>
+        </footer>
+    </main>
+
+    <script src="../js/perfil-profesor.js"></script>
+</body>
+</html>
