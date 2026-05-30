@@ -1,29 +1,49 @@
-[
-    {
-        "_idUsuario": "est-001",
-        "password": "$2b$10$V2kL43452xJ2xjOxUdFuGun8CmUkf0/4mkc32vwJTh8r1rQvCPu8i",
-        "name": "samuel.123",
-        "nombreCompleto": "Samuel Mundaray",
-        "ejerciciosResueltos": [
-            1,
-            2
-        ],
-        "registrosAvance": []
-    },
-    {
-        "_idUsuario": "est-002",
-        "password": "$2b$10$W6YVIMzpm2TiwbxRqgmJl.pED.fu2PaoAl9av/uyo2qKzElT28SVu",
-        "name": "rodrigo.123",
-        "nombreCompleto": "Rodrigo Moraurt",
-        "ejerciciosResueltos": [],
-        "registrosAvance": []
-    },
-    {
-        "_idUsuario": "est-003",
-        "password": "$2b$10$a4nY3zTJtKFjW7fhdO/85OCT22rbolqE.3Ju8eae4e8sWHw/RyZyy",
-        "name": "rafael.123",
-        "nombreCompleto": "Rafael Guacaran",
-        "ejerciciosResueltos": [],
-        "registrosAvance": []
-    }
-]
+[ {
+  "_idUsuario" : "est-001",
+  "idUsuario" : "est-001",
+  "password" : "$2b$10$V2kL43452xJ2xjOxUdFuGun8CmUkf0/4mkc32vwJTh8r1rQvCPu8i",
+  "name" : "samuel.123",
+  "nombreCompleto" : "Samuel Mundaray",
+  "ejerciciosResueltos" : [ "1", "2" ],
+  "registrosAvance" : [ ]
+}, {
+  "_idUsuario" : "est-002",
+  "idUsuario" : "est-002",
+  "password" : "$2b$10$W6YVIMzpm2TiwbxRqgmJl.pED.fu2PaoAl9av/uyo2qKzElT28SVu",
+  "name" : "rodrigo.123",
+  "nombreCompleto" : "Rodrigo Moraurt",
+  "ejerciciosResueltos" : [ ],
+  "registrosAvance" : [ ]
+}, {
+  "_idUsuario" : "est-003",
+  "idUsuario" : "est-003",
+  "password" : "$2b$10$a4nY3zTJtKFjW7fhdO/85OCT22rbolqE.3Ju8eae4e8sWHw/RyZyy",
+  "name" : "rafael.123",
+  "nombreCompleto" : "Rafael Guacaran",
+  "ejerciciosResueltos" : [ ],
+  "registrosAvance" : [ ]
+}, {
+  "_idUsuario" : "est-004",
+  "idUsuario" : "est-004",
+  "password" : "$2b$10$BN20No5rVgTKM4L/G4LLXui/xTIdQK2m2p3LFJPvJ9DgpvhIl50YK",
+  "name" : "camiiglesiasSTA",
+  "nombreCompleto" : "Camila iglesias",
+  "ejerciciosResueltos" : [ ],
+  "registrosAvance" : [ ]
+}, {
+  "_idUsuario" : "est-005",
+  "idUsuario" : "est-005",
+  "password" : "$2b$10$3NJiTYZdNXSeLS2Et6y03OkS/XcczJYI/ylism9sEqNl2aJAyNmAC",
+  "name" : "Verobeta",
+  "nombreCompleto" : "Veronica Betancourt",
+  "ejerciciosResueltos" : [ "6" ],
+  "registrosAvance" : [ ]
+}, {
+  "_idUsuario" : "est-006",
+  "idUsuario" : "est-006",
+  "password" : "{bcrypt}F1234567",
+  "name" : "Fmoraurt",
+  "nombreCompleto" : "Francisco Moraurt",
+  "ejerciciosResueltos" : [ "6" ],
+  "registrosAvance" : [ ]
+} ]

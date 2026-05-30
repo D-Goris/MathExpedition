@@ -1,17 +1,19 @@
-import maestrosService from './maestros.service.js';
+// import maestrosService from './maestros.service.js';
 
 const maestrosController = {};
+const JAVA_API = 'http://localhost:8080/api/java/maestros';
 
-maestrosController.obtenerPerfil = (req, res) => {
+maestrosController.obtenerPerfil = async (req, res) => {
     try {
         const idUsuario = req.params.id;
-        const resultado = maestrosService.obtenerPerfil(idUsuario);
-
-        if (resultado.error) {
-            return res.status(404).json({ success: false, message: resultado.error });
+        const response = await fetch(`${JAVA_API}/${idUsuario}/perfil`);
+        const data = await response.json();
+        
+        if (!response.ok) {
+            return res.status(response.status).json(data);
         }
 
-        res.status(200).json({ success: true, perfil: resultado });
+        res.status(200).json(data);
     } catch (error) {
         console.error('Error al obtener perfil del profesor:', error);
         res.status(500).json({ success: false, message: 'Error interno del servidor' });

@@ -15,5 +15,12 @@
             4,
             5
         ]
+    },
+    {
+        "idMision": 3,
+        "nombre": "Trigonometría",
+        "ejerciciosIds": [
+            6
+        ]
     }
 ]

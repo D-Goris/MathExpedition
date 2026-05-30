@@ -1,26 +1,19 @@
-[
-    {
-        "idGrupo": "grupo-1780103594320",
-        "nombre": "5to grado A",
-        "descripcion": "clase de la mañana",
-        "estudiantesIds": [
-            "est-001",
-            "est-002"
-        ],
-        "misionesIds": [
-            1
-        ]
-    },
-    {
-        "idGrupo": "grupo-1780103612304",
-        "nombre": "4to grado B",
-        "descripcion": "Clase de la tarde",
-        "estudiantesIds": [
-            "est-003"
-        ],
-        "misionesIds": [
-            2,
-            1
-        ]
-    }
-]
+[ {
+  "idGrupo" : "grupo-1780103594320",
+  "nombre" : "5to grado A",
+  "descripcion" : "clase de la mañana",
+  "estudiantesIds" : [ ],
+  "misionesIds" : [ "1" ]
+}, {
+  "idGrupo" : "grupo-1780103612304",
+  "nombre" : "4to grado B",
+  "descripcion" : "Clase de la tarde",
+  "estudiantesIds" : [ "est-003", "est-001" ],
+  "misionesIds" : [ "2", "1" ]
+}, {
+  "idGrupo" : "grupo-1780105573327",
+  "nombre" : "Matematica 6to grado",
+  "descripcion" : "Clase donde se dictaran todas las asignaciones de la catedra.",
+  "estudiantesIds" : [ "est-005", "est-006" ],
+  "misionesIds" : [ "3" ]
+} ]

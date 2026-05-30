@@ -1,65 +1,73 @@
 // src/modules/misiones/misiones.controller.js
-import misionesService from './misiones.service.js';
+// import misionesService from './misiones.service.js';
 
 const misionesController = {};
+const JAVA_API = 'http://localhost:8080/api/java/misiones';
 
-misionesController.obtenerMisiones = (req, res) => {
-    const misiones = misionesService.obtenerMisiones();
-    return res.status(200).json(misiones);
-};
-
-misionesController.obtenerEjerciciosPorMision = (req, res) => {
-    const { id } = req.params; // Este 'id' viene de la URL
-
-    const ejercicios = misionesService.obtenerEjerciciosPorMision(id);
-
-    if (!ejercicios) {
-        return res.status(404).json({ msg: `No se encontró la misión con ID ${id}` });
+misionesController.obtenerMisiones = async (req, res) => {
+    try {
+        const response = await fetch(JAVA_API);
+        const data = await response.json();
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(200).json(ejercicios);
 };
 
-misionesController.crearMision = (req, res) => {
+misionesController.obtenerEjerciciosPorMision = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const response = await fetch(`${JAVA_API}/${id}/ejercicios`);
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
+    }
+};
+
+misionesController.crearMision = async (req, res) => {
     const { nombre } = req.body;
 
     if (!nombre) {
         return res.status(400).json({ msg: 'Se requiere el nombre de la misión' });
     }
 
-    const resultado = misionesService.crearMision(nombre);
-
-    if (resultado.error) {
-        return res.status(400).json({ msg: resultado.error });
+    try {
+        const response = await fetch(JAVA_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre })
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(201).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(201).json({
-        msg: 'Misión creada exitosamente',
-        mision: resultado
-    });
 };
 
-misionesController.crearEjercicio = (req, res) => {
-    const { id } = req.params; // Este es el ID de la misión desde la URL
-    
-    // Extraemos los datos que envía tu formulario del frontend
+misionesController.crearEjercicio = async (req, res) => {
+    const { id } = req.params;
     const { pregunta, opA, opB, opC, opD, correcta } = req.body;
 
-    // Validación de seguridad básica
     if (!pregunta || !opA || !opB || !opC || !opD || !correcta) {
         return res.status(400).json({ msg: 'Faltan campos obligatorios para crear el ejercicio' });
     }
 
-    const resultado = misionesService.crearEjercicioEInyectar(id, req.body);
-
-    if (resultado.error) {
-        return res.status(404).json({ msg: resultado.error });
+    try {
+        const response = await fetch(`${JAVA_API}/${id}/ejercicios`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(req.body)
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(201).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(201).json({ 
-        msg: '¡Ejercicio creado e inyectado a la misión con éxito!', 
-        ejercicio: resultado 
-    });
 };
 
 export default misionesController;

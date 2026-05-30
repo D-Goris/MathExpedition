@@ -1,27 +1,39 @@
-import gruposService from './grupos.service.js';
+// import gruposService from './grupos.service.js';
 
 const gruposController = {};
+const JAVA_API = 'http://localhost:8080/api/java/grupos';
 
-gruposController.obtenerGrupos = (req, res) => {
-    const grupos = gruposService.obtenerGrupos();
-    return res.status(200).json(grupos);
+gruposController.obtenerGrupos = async (req, res) => {
+    try {
+        const response = await fetch(JAVA_API);
+        const data = await response.json();
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
+    }
 };
 
-gruposController.crearGrupo = (req, res) => {
+gruposController.crearGrupo = async (req, res) => {
     const { nombre, descripcion } = req.body;
     if (!nombre || !descripcion) {
         return res.status(400).json({ success: false, message: 'Faltan campos (nombre o descripción).' });
     }
 
-    const resultado = gruposService.crearGrupo(nombre, descripcion);
-    if (resultado.error) {
-        return res.status(400).json({ success: false, message: resultado.error });
+    try {
+        const response = await fetch(JAVA_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, descripcion })
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(201).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(201).json({ success: true, message: 'Grupo creado', grupo: resultado });
 };
 
-gruposController.asignarAlumno = (req, res) => {
+gruposController.asignarAlumno = async (req, res) => {
     const { idGrupo } = req.params;
     const { idAlumno } = req.body;
 
@@ -29,15 +41,21 @@ gruposController.asignarAlumno = (req, res) => {
         return res.status(400).json({ success: false, message: 'Se requiere el idAlumno' });
     }
 
-    const resultado = gruposService.asignarAlumno(idGrupo, idAlumno);
-    if (resultado.error) {
-        return res.status(400).json({ success: false, message: resultado.error });
+    try {
+        const response = await fetch(`${JAVA_API}/${idGrupo}/asignar-alumno`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idAlumno })
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(200).json({ success: true, message: 'Alumno asignado correctamente' });
 };
 
-gruposController.removerAlumno = (req, res) => {
+gruposController.removerAlumno = async (req, res) => {
     const { idGrupo } = req.params;
     const { idAlumno } = req.body;
 
@@ -45,15 +63,21 @@ gruposController.removerAlumno = (req, res) => {
         return res.status(400).json({ success: false, message: 'Se requiere el idAlumno' });
     }
 
-    const resultado = gruposService.removerAlumno(idGrupo, idAlumno);
-    if (resultado.error) {
-        return res.status(400).json({ success: false, message: resultado.error });
+    try {
+        const response = await fetch(`${JAVA_API}/${idGrupo}/remover-alumno`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idAlumno })
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(200).json({ success: true, message: 'Alumno removido correctamente' });
 };
 
-gruposController.asignarMision = (req, res) => {
+gruposController.asignarMision = async (req, res) => {
     const { idGrupo } = req.params;
     const { idMision } = req.body;
 
@@ -61,12 +85,18 @@ gruposController.asignarMision = (req, res) => {
         return res.status(400).json({ success: false, message: 'Se requiere el idMision' });
     }
 
-    const resultado = gruposService.asignarMision(idGrupo, idMision);
-    if (resultado.error) {
-        return res.status(400).json({ success: false, message: resultado.error });
+    try {
+        const response = await fetch(`${JAVA_API}/${idGrupo}/asignar-mision`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ idMision })
+        });
+        const data = await response.json();
+        if (!response.ok) return res.status(response.status).json(data);
+        return res.status(200).json(data);
+    } catch (error) {
+        return res.status(500).json({ error: 'Java backend no disponible' });
     }
-
-    return res.status(200).json({ success: true, message: 'Misión asignada correctamente' });
 };
 
 export default gruposController;

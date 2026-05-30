@@ -3,9 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectGrupo = document.getElementById('select-grupo-edicion');
     const contenedorLista = document.getElementById('lista-alumnos-grupo');
 
-    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '3000'
-        ? 'http://localhost:3000/api'
-        : (window.location.protocol.startsWith('http') ? `${window.location.origin}/api` : 'http://localhost:3000/api');
+    const API_BASE = 'http://localhost:8080/api';
 
     let gruposDB = [];
     let estudiantesDB = [];

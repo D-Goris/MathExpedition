@@ -58,5 +58,17 @@
         },
         "respuestaCorrecta": "C",
         "temaId": "2"
+    },
+    {
+        "id": 6,
+        "enunciado": "¿Cual de los siguientes planteamientos es de una identidad trigonométrica?",
+        "opciones": {
+            "A": "Tangente",
+            "B": "Arco",
+            "C": "Mente",
+            "D": "Alpha"
+        },
+        "respuestaCorrecta": "A",
+        "temaId": "3"
     }
 ]

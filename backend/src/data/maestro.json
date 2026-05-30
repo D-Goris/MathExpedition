@@ -1,14 +1,25 @@
-[
-    {
-        "idUsuario": "prof-001",
-        "password": "$2b$10$QKnWZIx9ukIazA2IX7nvv.SGynGxhFiHNJT0Xg4k5xq0mNyaeU35O",
-        "name": "Daniel Goris",
-        "email": "danielgoris@gmail.com"
-    },
-    {
-        "idUsuario": "prof-002",
-        "password": "$2b$10$ufEptkHKW9h7qEFnyiqFoOf1ItmArEaYz0bnJJ1F1Ehl3KvFZKln6",
-        "name": "Alan Ovalles",
-        "email": "alanovalles@gmail.com"
-    }
-]
+[ {
+  "_idUsuario" : "prof-001",
+  "idUsuario" : "prof-001",
+  "password" : "$2b$10$QKnWZIx9ukIazA2IX7nvv.SGynGxhFiHNJT0Xg4k5xq0mNyaeU35O",
+  "name" : "Daniel Goris",
+  "email" : "danielgoris@gmail.com"
+}, {
+  "_idUsuario" : "prof-002",
+  "idUsuario" : "prof-002",
+  "password" : "$2b$10$ufEptkHKW9h7qEFnyiqFoOf1ItmArEaYz0bnJJ1F1Ehl3KvFZKln6",
+  "name" : "Alan Ovalles",
+  "email" : "alanovalles@gmail.com"
+}, {
+  "_idUsuario" : "prof-003",
+  "idUsuario" : "prof-003",
+  "password" : "$2b$10$6gfsTfrpyecSyH/7WIzrdOZjfz9i3jn9FEjV3ixHxXsahKK7tXMbu",
+  "name" : "Rodrigo Moraurt",
+  "email" : "romoraurt@gmail.com"
+}, {
+  "_idUsuario" : "prof-004",
+  "idUsuario" : "prof-004",
+  "password" : "{bcrypt}Q1234567",
+  "name" : "Patricia Restrepo",
+  "email" : "prestrepo@gmail.com"
+} ]
