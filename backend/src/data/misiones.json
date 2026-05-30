@@ -1,21 +1,19 @@
 [
-  {
-    "idMision": 1,
-    "nombre": "Expedición Selva Geométrica",
-    "ejerciciosIds": [
-      501,
-      502,
-      503,
-      504,
-      506,
-      507
-    ]
-  },
-  {
-    "idMision": 2,
-    "nombre": "12",
-    "ejerciciosIds": [
-      505
-    ]
-  }
+    {
+        "idMision": 1,
+        "nombre": "Geometría",
+        "ejerciciosIds": [
+            1,
+            2
+        ]
+    },
+    {
+        "idMision": 2,
+        "nombre": "Algebra",
+        "ejerciciosIds": [
+            3,
+            4,
+            5
+        ]
+    }
 ]
